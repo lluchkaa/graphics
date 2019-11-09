@@ -5,6 +5,8 @@ import Image from '../../elements/Image'
 
 import logo from '../../../assets/images/logo.png'
 
+import './style.scss'
+
 interface IProps { }
 
 const Navigation: React.FC<IProps> = (props: IProps) => (
