@@ -21,3 +21,5 @@ const Image: React.FC<IProps> = (props: IProps) => {
     </div>
   )
 }
+
+export default Image
