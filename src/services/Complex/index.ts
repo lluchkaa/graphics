@@ -48,6 +48,30 @@ class Complex {
       )
     })
 
+  public sqr = () => {
+    const a = this.real
+    const b = this.imag
+    return new Complex(
+      a * a - b * b,
+      2 * a * b
+    )
+  }
+
+  public cub = () => {
+    const a = this.real
+    const b = this.imag
+    return new Complex(
+      a * a * a - 3 * a * b * b,
+      3 * a * a * b - b * b * b
+    )
+  }
+
+  public abs = () => Math.sqrt(this.real * this.real + this.imag * this.imag)
+
+  public ang = () =>
+    Math.atan(this.imag / this.real) + (this.real < 0 ? Math.PI : 0)
+
+
 }
 
 export default Complex
