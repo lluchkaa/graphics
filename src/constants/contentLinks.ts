@@ -8,15 +8,18 @@ import hexagonImage from '../assets/images/contentLogos/hexagon.svg'
 const links: IContentLink[] = [
   {
     key: ContentLinkType.fractal,
-    href: routeLinks.fractal()
+    href: routeLinks.fractal(),
+    text: 'Fractal'
   },
   {
     key: ContentLinkType.colorScheme,
-    href: routeLinks.colorScheme()
+    href: routeLinks.colorScheme(),
+    text: 'Color Scheme'
   },
   {
     key: ContentLinkType.hexagon,
-    href: routeLinks.hexagon()
+    href: routeLinks.hexagon(),
+    text: 'Hexagon'
   }
 ]
 

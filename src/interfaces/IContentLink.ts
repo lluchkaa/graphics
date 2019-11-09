@@ -6,6 +6,8 @@ export enum ContentLinkType {
   hexagon = 'hexagon'
 }
 
-interface IContentLink extends ILink<ContentLinkType> { }
+interface IContentLink extends ILink<ContentLinkType> {
+  text: string
+}
 
 export default IContentLink
