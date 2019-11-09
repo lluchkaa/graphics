@@ -4,11 +4,11 @@ interface IProps { }
 interface IState { }
 
 class UserGuide extends React.Component<IProps, IState> {
-    render() {
-        return (
-            <div />
-        )
-    }
+  render() {
+    return (
+      <div />
+    )
+  }
 }
 
 export default UserGuide
