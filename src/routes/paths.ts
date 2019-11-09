@@ -1,4 +1,5 @@
 const paths = {
+  landing: '/',
   fractal: '/fractal',
   colorScheme: '/color_scheme',
   hexagon: '/hexagon',
