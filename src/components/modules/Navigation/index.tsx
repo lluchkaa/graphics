@@ -16,7 +16,7 @@ const Navigation: React.FC<IProps> = (props: IProps) => (
       >
         <RouteLink
           to={link.href}
-          className="link"
+          className={`link ${link.key}`}
         >
           {link.text}
         </RouteLink>
@@ -25,7 +25,7 @@ const Navigation: React.FC<IProps> = (props: IProps) => (
     <li className="link-item">
       <RouteLink
         to={links.userGuide()}
-        className="link"
+        className="link user-guide"
       >
         ?
         </RouteLink>

@@ -16,11 +16,11 @@ const SocialNavigation: React.FC<IProps> = (props: IProps) => (
       >
         <a
           href={link.href}
-          className="link social-link"
+          className={`link social-link ${link.key}`}
         >
           <Image
             src={getSocialImage(link.key)}
-            className="social-link-image"
+            className={`social-link-image ${link.key}-image`}
           />
         </a>
       </li>
