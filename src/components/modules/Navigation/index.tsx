@@ -2,35 +2,26 @@ import React from 'react'
 import { Link as RouteLink } from 'react-router-dom'
 
 import links from '../../../routes/links'
+import contentLinks from '../../../constants/contentLinks'
+import { longStackSupport } from 'q'
 
 interface IProps { }
 
-const Nav: React.FC<IProps> = (props: IProps) => (
+const Navigation: React.FC<IProps> = (props: IProps) => (
   <nav className="navigation main-navigation">
-    <li className="link-item">
-      <RouteLink
-        to={links.fractal()}
-        className="link"
+    {contentLinks.map(link => (
+      <li
+        key={link.key}
+        className="content-link-item"
       >
-        Fractal
+        <RouteLink
+          to={link.href}
+          className="link"
+        >
+
         </RouteLink>
-    </li>
-    <li className="link-item">
-      <RouteLink
-        to={links.colorScheme()}
-        className="link"
-      >
-        Color Scheme
-        </RouteLink>
-    </li>
-    <li className="link-item">
-      <RouteLink
-        to={links.hexagon()}
-        className="link"
-      >
-        Hexagon
-        </RouteLink>
-    </li>
+      </li>
+    ))}
     <li className="link-item">
       <RouteLink
         to={links.userGuide()}
@@ -42,4 +33,4 @@ const Nav: React.FC<IProps> = (props: IProps) => (
   </nav>
 )
 
-export default Nav
+export default Navigation
