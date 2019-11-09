@@ -1,25 +1,45 @@
 import React from 'react'
+import { Link as RouteLink } from 'react-router-dom'
 
-import Nav from './Nav'
-import Image from '../../elements/Image'
-
-import logo from '../../../assets/images/logo.png'
-
-import './style.scss'
+import links from '../../../routes/links'
 
 interface IProps { }
 
-const Navigation: React.FC<IProps> = (props: IProps) => (
-  <div className="navigation">
-    <div className="logo">
-      <Image
-        src={logo}
-        className="logo" 
-      />
-    </div>
-
-    <Nav />
-  </div>
+const Nav: React.FC<IProps> = (props: IProps) => (
+  <nav className="navigation main-navigation">
+    <li className="link-item">
+      <RouteLink
+        to={links.fractal()}
+        className="link"
+      >
+        Fractal
+        </RouteLink>
+    </li>
+    <li className="link-item">
+      <RouteLink
+        to={links.colorScheme()}
+        className="link"
+      >
+        Color Scheme
+        </RouteLink>
+    </li>
+    <li className="link-item">
+      <RouteLink
+        to={links.hexagon()}
+        className="link"
+      >
+        Hexagon
+        </RouteLink>
+    </li>
+    <li className="link-item">
+      <RouteLink
+        to={links.userGuide()}
+        className="link"
+      >
+        ?
+        </RouteLink>
+    </li>
+  </nav>
 )
 
-export default Navigation
+export default Nav
