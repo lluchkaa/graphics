@@ -18,7 +18,7 @@ const Navigation: React.FC<IProps> = (props: IProps) => (
           to={link.href}
           className="link"
         >
-
+          {link.text}
         </RouteLink>
       </li>
     ))}
