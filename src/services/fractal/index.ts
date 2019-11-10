@@ -55,6 +55,14 @@ const getInfo = (
     throw 'bad zoom'
   }
 
+  if (movedCenter.x < baseBounds.min.x ||
+    movedCenter.x > baseBounds.max.x ||
+    movedCenter.y < baseBounds.min.y || 
+    movedCenter.y > baseBounds.max.y
+  ) {
+    throw 'bad center'
+  }
+
   if (iterations < 0) { iterations = getIterations(zoom) }
 
   const result: Complex[][] = []
