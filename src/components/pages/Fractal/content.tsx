@@ -6,6 +6,7 @@ interface IProps {
   image: string
 
   zoom: number
+  setZoom: (zoom: number) => void
   changeZoom: (diff: number) => void
 
   k: number
@@ -15,7 +16,15 @@ interface IProps {
   setC: (c: number) => void
 
   center: IPoint2d
+  setCenter: (center: IPoint2d) => void
   moveCenter: (xDiff: number, yDiff: number) => void
+}
+
+interface IState {
+  k: number
+  c: number
+  zoom: number
+  center: IPoint2d
 }
 
 enum Key {
@@ -27,7 +36,19 @@ enum Key {
   ZoomOut = 45
 }
 
-class Content extends React.Component<IProps> {
+class Content extends React.Component<IProps, IState> {
+
+  scale: number = 100
+
+  constructor(props: IProps) {
+    super(props)
+    this.state = {
+      k: props.k,
+      c: props.c,
+      zoom: props.zoom,
+      center: props.center
+    }
+  }
 
   componentDidMount() {
     window.addEventListener('keypress', (e) => this.keyPressed(e.keyCode))
@@ -36,29 +57,30 @@ class Content extends React.Component<IProps> {
   componentWillUnmount() {
     window.removeEventListener('keypress', (e) => this.keyPressed(e.keyCode))
   }
-  
+
   keyPressed = (keyCode: Key) => {
     const { zoom, moveCenter, changeZoom } = this.props
-    const move = 0.1 / zoom
+    const toMove = 0.1 / zoom
+    const toZoom = 0.2
 
     switch (keyCode) {
       case Key.UpArrow:
-        moveCenter(0, -move)
+        moveCenter(0, -toMove)
         break;
       case Key.DownArrow:
-        moveCenter(0, move)
+        moveCenter(0, toMove)
         break;
       case Key.LeftArrow:
-        moveCenter(-move, 0)
+        moveCenter(-toMove, 0)
         break;
       case Key.RightArrow:
-        moveCenter(move, 0)
+        moveCenter(toMove, 0)
         break;
       case Key.ZoomIn:
-        changeZoom(0.2)
+        changeZoom(toZoom)
         break
       case Key.ZoomOut:
-        changeZoom(-0.2)
+        changeZoom(-toZoom)
         break
       default:
         break;
@@ -68,20 +90,112 @@ class Content extends React.Component<IProps> {
   render() {
     const {
       image,
+      zoom,
+      setZoom,
       changeZoom,
       k,
       setK,
       c,
-      setC
+      setC,
+      setCenter
     } = this.props
+    const {
+      k: curK,
+      c: curC,
+      zoom: curZoom,
+      center: curCenter
+    } = this.state
     return (
       <div
         className="page fractal"
       >
-        <Image
-          className="fractal"
-          src={image}
-        />
+        <div
+          className="fractal-wrapper"
+        >
+          <Image
+            className="fractal"
+            src={image}
+          />
+          <input
+            type="number"
+            value={curZoom * this.scale}
+            onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
+            onBlur={() => setZoom(this.state.zoom)}
+          />
+        </div>
+        <div
+          className="info"
+        >
+          <div
+            className="function"
+          >
+            f(z) = z ^ k + c
+          </div>
+          <div className="inputs coefs">
+            <div
+              className="input-group"
+            >
+              <label>k = </label>
+              <input
+                type="number"
+                value={curK}
+                onChange={(e) => this.setState({ k: +e.target.value })}
+                onBlur={() => setK(this.state.k)}
+              />
+            </div>
+            <div
+              className="input-group"
+            >
+              <label>c = </label>
+              <input
+                type="number"
+                value={curC}
+                onChange={(e) => this.setState({ c: +e.target.value })}
+                onBlur={() => setC(this.state.c)}
+              />
+            </div>
+          </div>
+          <div className="inputs center">
+            <div
+              className="input-group"
+            >
+              <label>x = </label>
+              <input
+                type="number"
+                value={curCenter.x * 100}
+                onChange={(e) => {
+                  const { value } = e.target
+                  this.setState(prev => ({
+                    center: {
+                      x: +value / this.scale,
+                      y: prev.center.y
+                    }
+                  }))
+                }}
+                onBlur={() => setCenter(this.state.center)}
+              />
+            </div>
+            <div
+              className="input-group"
+            >
+              <label>y = </label>
+              <input
+                type="number"
+                value={curCenter.y * 100}
+                onChange={(e) => {
+                  const { value } = e.target
+                  this.setState(prev => ({
+                    center: {
+                      x: prev.center.x,
+                      y: +value / this.scale
+                    }
+                  }))
+                }}
+                onBlur={() => setCenter(this.state.center)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

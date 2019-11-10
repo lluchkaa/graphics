@@ -66,6 +66,9 @@ class Fractal extends React.Component<IProps, IState> {
     return canvas.toDataURL()
   }
 
+  setZoom = (zoom: number) =>
+    this.setState({ zoom: Math.max(zoom, this.zoomBounds.min) })
+
   changeZoom = (diff: number) =>
     this.setState(prev => ({
       zoom: Math.max(prev.zoom + diff, this.zoomBounds.min)
@@ -74,6 +77,8 @@ class Fractal extends React.Component<IProps, IState> {
   setK = (k: number) => this.setState({ k })
 
   setC = (c: number) => this.setState({ c })
+
+  setCenter = (center: IPoint2d) => this.setState({ center })
 
   moveCenter = (xDiff: number, yDiff: number) =>
     this.setState(prev => ({
@@ -88,10 +93,11 @@ class Fractal extends React.Component<IProps, IState> {
     return (
       <Content
         image={this.getImage()}
-        
+
         zoom={zoom}
+        setZoom={this.setZoom}
         changeZoom={this.changeZoom}
-        
+
         k={k}
         setK={this.setK}
 
@@ -99,6 +105,7 @@ class Fractal extends React.Component<IProps, IState> {
         setC={this.setC}
 
         center={center}
+        setCenter={this.setCenter}
         moveCenter={this.moveCenter}
       />
     )
