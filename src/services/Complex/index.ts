@@ -70,13 +70,28 @@ class Complex {
 
   public ang = () =>
     Math.atan(this.imag / this.real) + (this.real < 0 ? Math.PI : 0)
-  
+
   public neg = () => new Complex(-this.real, -this.imag)
-  
+
   public pow = (n: number) => {
     const z = Math.pow(this.abs(), n)
     const f = n * this.ang()
     return new Complex(z * Math.cos(f), z * Math.sin(f))
+  }
+
+  public root = (n: number): Complex[] => {
+    if (n === 0) {
+      return [new Complex(1, 0)]
+    }
+
+    const res: Complex[] = []
+    for (let i = 0; i < n; ++i) {
+      const z = Math.pow(this.abs(), 1.0 / n)
+      const f = (this.ang() + 2 * Math.PI * i) / n
+      res.push(new Complex(z * Math.cos(f), z * Math.sin(f)))
+    }
+    
+    return res
   }
 }
 
