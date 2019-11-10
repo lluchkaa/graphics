@@ -1,9 +1,9 @@
 import { IPoint2d } from "../../interfaces/IPoint";
 import Complex from "../Complex";
-import IBounds, { NumBounds } from "../../interfaces/IBounds";
+import IBounds from "../../interfaces/IBounds";
 import { scalePoint2d, pointToComplex } from "../numHelper";
 
-const bounds: IBounds<IPoint2d> = {
+const baseBounds: IBounds<IPoint2d> = {
   min: {
     x: -2,
     y: -1
@@ -14,21 +14,34 @@ const bounds: IBounds<IPoint2d> = {
   }
 }
 
-const getImage = (
-  center: IPoint2d,
-  width: number,
-  height: number,
-  roots: IPoint2d[],
-  iterations: number = -1
+const eps = 1e-3
+
+const getInfo = (
+  zoom: number,
+  sizes: IBounds<IPoint2d>,
+  roots?: IPoint2d[],
+  iterations: number = -1,
 ) => {
-  for (let y = 0; y < height; ++y) {
-    for (let x = 0; x < width; ++x) {
+  const result: Complex[][] = []
+  for (let y = sizes.min.y; y < sizes.max.y; ++y) {
+    result[y] = []
+    for (let x = sizes.min.x; x < sizes.max.x; ++x) {
       let z = pointToComplex(scalePoint2d(
         { x, y },
-        { min: { x: 0, y: 0 }, max: { x: width, y: height } },
-        bounds
+        sizes,
+        baseBounds
       ))
+
+      let rootIsFound: boolean = false;
       for (let i = 0; i < iterations; ++i) {
+        roots && roots.forEach(r => {
+          if (Complex.sub([pointToComplex(r), z]).abs() < eps) {
+            rootIsFound = true
+          }
+        })
+
+        if (rootIsFound) { break }
+
         z = Complex.sub([
           z,
           Complex.div([
@@ -43,8 +56,10 @@ const getImage = (
           ])
         ])
       }
+      result[y][x] = z
     }
   }
+  return result
 }
 
-export default getImage
+export default getInfo
