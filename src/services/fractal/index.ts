@@ -1,9 +1,9 @@
 import { IPoint2d } from "../../interfaces/IPoint";
 import Complex from "../Complex";
-import IBounds from "../../interfaces/IBounds";
+import IBounds, { NumBounds } from "../../interfaces/IBounds";
 import { scalePoint2d, pointToComplex } from "../numHelper";
 
-const baseBounds: IBounds<IPoint2d> = {
+export const baseBounds: IBounds<IPoint2d> = {
   min: {
     x: -1,
     y: -1
@@ -40,7 +40,10 @@ const getIterations = (zoom: number): number => (zoom / 2) * 10
 
 const eps = 1e-3
 
-const minZoom = 0
+export const zoomBounds: NumBounds = {
+  max: 99,
+  min: 0.1
+}
 
 const getInfo = (
   func: (z: Complex) => Complex,
@@ -51,7 +54,7 @@ const getInfo = (
   roots?: IPoint2d[],
   iterations: number = -1,
 ) => {
-  if (zoom <= minZoom) {
+  if (zoom < zoomBounds.min || zoom > zoomBounds.max) {
     throw 'bad zoom'
   }
 

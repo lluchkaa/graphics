@@ -4,12 +4,15 @@ import Content from './content'
 import getInfo from '../../../services/fractal'
 import Complex from '../../../services/Complex'
 import { IPoint2d } from '../../../interfaces/IPoint'
+import IBounds, { NumBounds } from '../../../interfaces/IBounds'
+import { baseBounds, zoomBounds } from '../../../services/fractal'
 
 interface IProps { }
 interface IState {
   zoom: number
   k: number
   c: number
+  center: IPoint2d
 }
 
 class Fractal extends React.Component<IProps, IState> {
@@ -19,14 +22,15 @@ class Fractal extends React.Component<IProps, IState> {
     this.state = {
       zoom: 1,
       k: 3,
-      c: 1
+      c: 1,
+      center: { x: 0, y: 0 }
     }
   }
 
   size: number = 500
 
-  minZoom: number = 0.1
-  maxZoom: number = 2
+  zoomBounds: NumBounds = zoomBounds
+  centerBounds: IBounds<IPoint2d> = baseBounds
 
   func = (k: number, c: number) =>
     (z: Complex) => Complex.sub([z.pow(k), new Complex(c, 0)])
@@ -50,7 +54,7 @@ class Fractal extends React.Component<IProps, IState> {
       this.df(k, c),
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
       zoom,
-      {x: 0, y: 0},
+      { x: 0, y: 0 },
       this.roots
     )
 
@@ -62,19 +66,22 @@ class Fractal extends React.Component<IProps, IState> {
     return canvas.toDataURL()
   }
 
-  changeZoom = (diff: number) => {
-    this.setState(prev => {
-      const val = prev.zoom + diff
-      const zoom = val < this.minZoom ? this.minZoom : val
-      return {
-        zoom
-      }
-    })
-  }
+  changeZoom = (diff: number) =>
+    this.setState(prev => ({
+      zoom: Math.max(prev.zoom + diff, this.zoomBounds.min)
+    }))
 
   setK = (k: number) => this.setState({ k })
 
   setC = (c: number) => this.setState({ c })
+
+  moveCenter = (xDiff: number, yDiff: number) =>
+    this.setState(prev => ({
+      center: {
+        x: Math.min(this.centerBounds.max.x, Math.max(this.centerBounds.min.x, prev.center.x + xDiff)),
+        y: Math.min(this.centerBounds.max.y, Math.max(this.centerBounds.min.y, prev.center.y + xDiff))
+      }
+    }))
 
   render() {
     return (
