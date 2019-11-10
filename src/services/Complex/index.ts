@@ -70,8 +70,8 @@ class Complex {
 
   public ang = () =>
     Math.atan(this.imag / this.real) + (this.real < 0 ? Math.PI : 0)
-
-
+  
+  public neg = () => new Complex(-this.real, -this.imag)
 }
 
 export default Complex
