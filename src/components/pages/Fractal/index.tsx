@@ -23,40 +23,40 @@ class Fractal extends React.Component<IProps, IState> {
     }
   }
 
+  size: number = 500
+
   minZoom: number = 0.1
+  maxZoom: number = 2
 
-  func = (z: Complex) => Complex.sub([z.cub(), new Complex(1, 0)])
-  df = (z: Complex) => Complex.mul([new Complex(3, 0), z.sqr()])
+  func = (k: number, c: number) =>
+    (z: Complex) => Complex.sub([z.pow(k), new Complex(c, 0)])
+  df = (k: number, c: number) =>
+    (z: Complex) => Complex.mul([new Complex(k, 0), z.pow(k - 1)])
 
-  roots: IPoint2d[] = [
-    { x: 1, y: 0 },
-    { x: -0.5, y: Math.sin(2 * Math.PI / 3) },
-    { x: -0.5, y: -Math.sin(2 * Math.PI / 3) }
-  ]
+  roots: IPoint2d[] = []
 
   getFillStyle = (value: Complex): string => `hsl(${value.ang() * 180 / Math.PI}, 100%, 50%)`
 
   getImage = () => {
-    const { zoom } = this.state
+    const { zoom, k, c } = this.state
 
     const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    canvas.height = 400
-    canvas.width = 800
+    const ctx = canvas.getContext('2d')!
+    canvas.height = this.size
+    canvas.width = this.size
+
     const values = getInfo(
-      this.func,
-      this.df,
+      this.func(k, c),
+      this.df(k, c),
       zoom,
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
-      this.roots,
-      20
+      this.roots
     )
-    if (ctx) {
-      values.forEach((arr, y) => arr.forEach((v, x) => {
-        ctx.fillStyle = this.getFillStyle(v)
-        ctx.fillRect(x, y, 1, 1)
-      }))
-    }
+
+    values.forEach((arr, y) => arr.forEach((v, x) => {
+      ctx.fillStyle = this.getFillStyle(v)
+      ctx.fillRect(x, y, 1, 1)
+    }))
 
     return canvas.toDataURL()
   }
@@ -67,9 +67,13 @@ class Fractal extends React.Component<IProps, IState> {
       const zoom = val < this.minZoom ? this.minZoom : val
       return {
         zoom
-      } 
+      }
     })
   }
+
+  setK = (k: number) => this.setState({ k })
+
+  setC = (c: number) => this.setState({ c })
 
   render() {
     return (

@@ -5,11 +5,11 @@ import { scalePoint2d, pointToComplex } from "../numHelper";
 
 const baseBounds: IBounds<IPoint2d> = {
   min: {
-    x: -2,
+    x: -1,
     y: -1
   },
   max: {
-    x: 2,
+    x: 1,
     y: 1
   }
 }
