@@ -8,6 +8,8 @@ import { IPoint2d } from '../../../interfaces/IPoint'
 interface IProps { }
 interface IState {
   zoom: number
+  k: number
+  c: number
 }
 
 class Fractal extends React.Component<IProps, IState> {
@@ -15,7 +17,9 @@ class Fractal extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
     this.state = {
-      zoom: 1
+      zoom: 1,
+      k: 3,
+      c: 1
     }
   }
 
