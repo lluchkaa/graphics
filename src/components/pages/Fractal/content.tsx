@@ -95,11 +95,12 @@ class Content extends React.Component<IProps, IState> {
         newZoom -= toZoom
         break
       default:
-        break;
+        return;
     }
     this.setState({ center: newCenter, zoom: newZoom })
     setCenter(newCenter)
     setZoom(newZoom)
+
   }
 
   render() {
