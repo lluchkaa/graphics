@@ -14,6 +14,30 @@ const baseBounds: IBounds<IPoint2d> = {
   }
 }
 
+const getBounds = (zoom: number, base: IBounds<IPoint2d> = baseBounds): IBounds<IPoint2d> => {
+  const curDistX = (base.max.x - base.min.x)
+  const curDistY = (base.max.y - base.min.y)
+
+  const newDistX = curDistX * zoom
+  const newDistY = curDistY * zoom
+
+  const xDiff = (newDistX - curDistX) / 2
+  const yDiff = (newDistY - curDistY) / 2
+
+  return {
+    min: {
+      x: base.min.x + xDiff,
+      y: base.min.y + yDiff
+    },
+    max: {
+      x: base.max.x - xDiff,
+      y: base.max.y - yDiff
+    }
+  }
+}
+
+const getIterations = (zoom: number): number => (zoom / 2) * 10
+
 const eps = 1e-3
 
 const getInfo = (
@@ -24,6 +48,8 @@ const getInfo = (
   roots?: IPoint2d[],
   iterations: number = -1,
 ) => {
+  if (iterations < 0) { iterations = getIterations(zoom) }
+
   const result: Complex[][] = []
   for (let y = sizes.min.y; y < sizes.max.y; ++y) {
     result[y] = []
@@ -31,7 +57,7 @@ const getInfo = (
       let z = pointToComplex(scalePoint2d(
         { x, y },
         sizes,
-        baseBounds
+        getBounds(zoom)
       ))
 
       let rootIsFound: boolean = false;
