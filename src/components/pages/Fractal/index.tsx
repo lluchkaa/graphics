@@ -6,6 +6,7 @@ import Complex from '../../../services/Complex'
 import { IPoint2d } from '../../../interfaces/IPoint'
 import IBounds, { NumBounds } from '../../../interfaces/IBounds'
 import { baseBounds, zoomBounds } from '../../../services/fractal'
+import { complexToPoint } from '../../../services/numHelper'
 
 interface IProps { }
 interface IState {
@@ -37,7 +38,10 @@ class Fractal extends React.Component<IProps, IState> {
   df = (k: number, c: number) =>
     (z: Complex) => Complex.mul([new Complex(k, 0), z.pow(k - 1)])
 
-  roots: IPoint2d[] = []
+  getRoots = () => {
+    const { k, c } = this.state
+    return new Complex(c, 0).root(k).map(v => complexToPoint(v))
+  }
 
   getFillStyle = (value: Complex): string => `hsl(${value.ang() * 180 / Math.PI}, 100%, 50%)`
 
@@ -55,7 +59,7 @@ class Fractal extends React.Component<IProps, IState> {
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
       zoom,
       center,
-      this.roots
+      this.getRoots()
     )
 
     values.forEach((arr, y) => arr.forEach((v, x) => {
