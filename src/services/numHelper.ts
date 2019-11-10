@@ -2,20 +2,6 @@ import { IPoint2d } from "../interfaces/IPoint"
 import IBounds from "../interfaces/IBounds"
 import Complex from './Complex'
 
-export const df = (func: (z:Complex) => Complex, x: Complex) => {
-  const eps = new Complex(1e-6, 0)
-  return Complex.div([
-    Complex.sub([
-      func(Complex.add([
-        x,
-        eps
-      ])),
-      func(x)
-    ]),
-    eps
-  ])
-}
-
 export const scalePoint2d = (
   point: IPoint2d,
   from: IBounds<IPoint2d>,
