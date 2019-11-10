@@ -42,7 +42,7 @@ class Fractal extends React.Component<IProps, IState> {
   getFillStyle = (value: Complex): string => `hsl(${value.ang() * 180 / Math.PI}, 100%, 50%)`
 
   getImage = () => {
-    const { zoom, k, c } = this.state
+    const { zoom, k, c, center } = this.state
 
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
@@ -54,7 +54,7 @@ class Fractal extends React.Component<IProps, IState> {
       this.df(k, c),
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
       zoom,
-      { x: 0, y: 0 },
+      center,
       this.roots
     )
 
@@ -79,14 +79,27 @@ class Fractal extends React.Component<IProps, IState> {
     this.setState(prev => ({
       center: {
         x: Math.min(this.centerBounds.max.x, Math.max(this.centerBounds.min.x, prev.center.x + xDiff)),
-        y: Math.min(this.centerBounds.max.y, Math.max(this.centerBounds.min.y, prev.center.y + xDiff))
+        y: Math.min(this.centerBounds.max.y, Math.max(this.centerBounds.min.y, prev.center.y + yDiff))
       }
     }))
 
   render() {
+    const { zoom, k, c, center } = this.state
     return (
       <Content
         image={this.getImage()}
+        
+        zoom={zoom}
+        changeZoom={this.changeZoom}
+        
+        k={k}
+        setK={this.setK}
+
+        c={c}
+        setC={this.setC}
+
+        center={center}
+        moveCenter={this.moveCenter}
       />
     )
   }
