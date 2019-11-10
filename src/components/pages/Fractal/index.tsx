@@ -6,9 +6,20 @@ import Complex from '../../../services/Complex'
 import { IPoint2d } from '../../../interfaces/IPoint'
 
 interface IProps { }
-interface IState { }
+interface IState {
+  zoom: number
+}
 
 class Fractal extends React.Component<IProps, IState> {
+
+  constructor(props: IProps) {
+    super(props)
+    this.state = {
+      zoom: 1
+    }
+  }
+
+  minZoom: number = 0.1
 
   func = (z: Complex) => Complex.sub([z.cub(), new Complex(1, 0)])
   df = (z: Complex) => Complex.mul([new Complex(3, 0), z.sqr()])
@@ -19,7 +30,11 @@ class Fractal extends React.Component<IProps, IState> {
     { x: -0.5, y: -Math.sin(2 * Math.PI / 3) }
   ]
 
+  getFillStyle = (value: Complex): string => `hsl(${value.ang() * 180 / Math.PI}, 100%, 50%)`
+
   getImage = () => {
+    const { zoom } = this.state
+
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     canvas.height = 400
@@ -27,19 +42,29 @@ class Fractal extends React.Component<IProps, IState> {
     const values = getInfo(
       this.func,
       this.df,
-      0,
+      zoom,
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
       this.roots,
       20
     )
     if (ctx) {
       values.forEach((arr, y) => arr.forEach((v, x) => {
-        ctx.fillStyle = `hsl(${v.ang() * 180 / Math.PI}, 100%, 50%)`
+        ctx.fillStyle = this.getFillStyle(v)
         ctx.fillRect(x, y, 1, 1)
       }))
     }
 
     return canvas.toDataURL()
+  }
+
+  changeZoom = (diff: number) => {
+    this.setState(prev => {
+      const val = prev.zoom + diff
+      const zoom = val < this.minZoom ? this.minZoom : val
+      return {
+        zoom
+      } 
+    })
   }
 
   render() {
