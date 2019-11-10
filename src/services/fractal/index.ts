@@ -52,7 +52,7 @@ const getInfo = (
   zoom: number,
   movedCenter: IPoint2d,
   roots?: IPoint2d[],
-  iterations?: number = -1,
+  iterations: number = -1,
 ) => {
   if (zoom < zoomBounds.min || zoom > zoomBounds.max) {
     throw 'bad zoom'
