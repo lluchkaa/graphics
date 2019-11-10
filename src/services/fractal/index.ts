@@ -1,7 +1,7 @@
 import { IPoint2d } from "../../interfaces/IPoint";
 import Complex from "../Complex";
 import IBounds from "../../interfaces/IBounds";
-import { scalePoint2d, pointToComplex } from "../numHelper";
+import { scalePoint2d, pointToComplex, df } from "../numHelper";
 
 const baseBounds: IBounds<IPoint2d> = {
   min: {
@@ -17,6 +17,7 @@ const baseBounds: IBounds<IPoint2d> = {
 const eps = 1e-3
 
 const getInfo = (
+  func: (z: Complex) => Complex,
   zoom: number,
   sizes: IBounds<IPoint2d>,
   roots?: IPoint2d[],
@@ -45,14 +46,8 @@ const getInfo = (
         z = Complex.sub([
           z,
           Complex.div([
-            Complex.sub([
-              z.cub(),
-              new Complex(-1, 0)
-            ]),
-            Complex.mul([
-              new Complex(3, 0),
-              z.sqr()
-            ])
+            func(z),
+            df(func, z)
           ])
         ])
       }
