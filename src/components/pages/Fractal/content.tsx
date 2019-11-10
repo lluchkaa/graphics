@@ -80,10 +80,10 @@ class Content extends React.Component<IProps, IState> {
         moveCenter(0, toMove)
         break;
       case Key.LeftArrow:
-        moveCenter(-toMove, 0)
+        moveCenter(toMove, 0)
         break;
       case Key.RightArrow:
-        moveCenter(toMove, 0)
+        moveCenter(-toMove, 0)
         break;
       case Key.ZoomIn:
         changeZoom(toZoom)
