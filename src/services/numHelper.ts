@@ -3,7 +3,7 @@ import IBounds from "../interfaces/IBounds"
 import Complex from './Complex'
 
 export const df = (func: (z:Complex) => Complex, x: Complex) => {
-  const eps = new Complex(1e-3, 1e-3)
+  const eps = new Complex(1e-6, 0)
   return Complex.div([
     Complex.sub([
       func(Complex.add([
