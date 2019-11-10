@@ -36,7 +36,7 @@ const getBounds = (zoom: number, center: IPoint2d = { x: 0, y: 0 }, base: IBound
   }
 }
 
-const getIterations = (zoom: number): number => (zoom / 2) * 10
+const getIterations = (zoom: number): number => Math.sqrt(zoom * 250)
 
 const eps = 1e-3
 

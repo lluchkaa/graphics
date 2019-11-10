@@ -97,6 +97,7 @@ class Content extends React.Component<IProps, IState> {
       setK,
       c,
       setC,
+      center,
       setCenter
     } = this.props
     const {
@@ -140,7 +141,7 @@ class Content extends React.Component<IProps, IState> {
                 type="number"
                 value={curK}
                 onChange={(e) => this.setState({ k: +e.target.value })}
-                onBlur={() => setK(this.state.k)}
+                onBlur={() => curK !== k && setK(curK)}
               />
             </div>
             <div
@@ -151,7 +152,7 @@ class Content extends React.Component<IProps, IState> {
                 type="number"
                 value={curC}
                 onChange={(e) => this.setState({ c: +e.target.value })}
-                onBlur={() => setC(this.state.c)}
+                onBlur={() => curC !== c && setC(curC)}
               />
             </div>
           </div>
@@ -162,7 +163,7 @@ class Content extends React.Component<IProps, IState> {
               <label>x = </label>
               <input
                 type="number"
-                value={curCenter.x * 100}
+                value={curCenter.x * this.scale}
                 onChange={(e) => {
                   const { value } = e.target
                   this.setState(prev => ({
@@ -172,7 +173,7 @@ class Content extends React.Component<IProps, IState> {
                     }
                   }))
                 }}
-                onBlur={() => setCenter(this.state.center)}
+                onBlur={() => curCenter !== center && setCenter(curCenter)}
               />
             </div>
             <div
@@ -181,7 +182,7 @@ class Content extends React.Component<IProps, IState> {
               <label>y = </label>
               <input
                 type="number"
-                value={curCenter.y * 100}
+                value={curCenter.y * this.scale}
                 onChange={(e) => {
                   const { value } = e.target
                   this.setState(prev => ({
@@ -191,7 +192,7 @@ class Content extends React.Component<IProps, IState> {
                     }
                   }))
                 }}
-                onBlur={() => setCenter(this.state.center)}
+                onBlur={() => curCenter !== center && setCenter(curCenter)}
               />
             </div>
           </div>
