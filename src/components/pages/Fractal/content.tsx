@@ -50,14 +50,14 @@ class Content extends React.Component<IProps, IState> {
     }
   }
 
-  static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
-    return {
-      k: nextProps.k,
-      c: nextProps.c,
-      zoom: nextProps.zoom,
-      center: nextProps.center
-    }
-  }
+  // static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
+  //   return {
+  //     k: nextProps.k,
+  //     c: nextProps.c,
+  //     zoom: nextProps.zoom,
+  //     center: nextProps.center
+  //   }
+  // }
 
   componentDidMount() {
     window.addEventListener('keypress', (e) => this.keyPressed(e.keyCode))
@@ -68,32 +68,38 @@ class Content extends React.Component<IProps, IState> {
   }
 
   keyPressed = (keyCode: Key) => {
-    const { zoom, moveCenter, changeZoom } = this.props
+    const { center, zoom, setCenter, setZoom } = this.props
     const toMove = 0.1 / zoom
     const toZoom = 0.2
 
+    let newZoom = zoom
+    const newCenter = center
+
     switch (keyCode) {
       case Key.UpArrow:
-        moveCenter(0, -toMove)
+        newCenter.y -= toMove
         break;
       case Key.DownArrow:
-        moveCenter(0, toMove)
+        newCenter.y += toMove
         break;
       case Key.LeftArrow:
-        moveCenter(toMove, 0)
+        newCenter.x += toMove
         break;
       case Key.RightArrow:
-        moveCenter(-toMove, 0)
+        newCenter.x -= toMove
         break;
       case Key.ZoomIn:
-        changeZoom(toZoom)
+        newZoom += toZoom
         break
       case Key.ZoomOut:
-        changeZoom(-toZoom)
+        newZoom -= toZoom
         break
       default:
         break;
     }
+    this.setState({ center: newCenter, zoom: newZoom })
+    setCenter(newCenter)
+    setZoom(newZoom)
   }
 
   render() {
