@@ -18,11 +18,11 @@ const getBounds = (zoom: number, base: IBounds<IPoint2d> = baseBounds): IBounds<
   const curDistX = (base.max.x - base.min.x)
   const curDistY = (base.max.y - base.min.y)
 
-  const newDistX = curDistX * zoom
-  const newDistY = curDistY * zoom
+  const newDistX = curDistX / zoom
+  const newDistY = curDistY / zoom
 
-  const xDiff = (newDistX - curDistX) / 2
-  const yDiff = (newDistY - curDistY) / 2
+  const xDiff = (curDistX - newDistX) / 2
+  const yDiff = (newDistY - newDistY) / 2
 
   return {
     min: {
