@@ -41,7 +41,7 @@ const getIterations = (zoom: number): number => Math.sqrt(zoom * 50)
 const eps = 1e-3
 
 export const zoomBounds: NumBounds = {
-  max: 99,
+  max: 999,
   min: 0.1
 }
 
