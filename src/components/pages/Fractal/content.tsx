@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from '../../elements/Image'
 import { IPoint2d } from '../../../interfaces/IPoint'
+import { zoomBounds } from '../../../services/fractal'
 
 interface IProps {
   image: string
@@ -97,10 +98,14 @@ class Content extends React.Component<IProps, IState> {
       default:
         return;
     }
-    this.setState({ center: newCenter, zoom: newZoom })
-    setCenter(newCenter)
-    setZoom(newZoom)
-
+    if (newCenter !== center) {
+      this.setState({ center: newCenter })
+      setCenter(newCenter)
+    }
+    if (newZoom !== zoom) {
+      this.setState({ zoom: newZoom })
+      setZoom(newZoom)
+    }
   }
 
   render() {
