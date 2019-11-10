@@ -50,6 +50,15 @@ class Content extends React.Component<IProps, IState> {
     }
   }
 
+  static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
+    return {
+      k: nextProps.k,
+      c: nextProps.c,
+      zoom: nextProps.zoom,
+      center: nextProps.center
+    }
+  }
+
   componentDidMount() {
     window.addEventListener('keypress', (e) => this.keyPressed(e.keyCode))
   }
