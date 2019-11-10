@@ -27,7 +27,7 @@ class Complex {
     nums.reduce((acc, v) => new Complex(acc.real + v.real, acc.imag + acc.imag))
 
   public static sub = (nums: Complex[]): Complex =>
-    nums.reduce((acc, v) => new Complex(acc.real - v.real, acc.imag - acc.imag))
+    nums.reduce((acc, v) => new Complex(acc.real - v.real, acc.imag - v.imag))
 
   public static mul = (nums: Complex[]): Complex =>
     nums.reduce((acc, v) =>
