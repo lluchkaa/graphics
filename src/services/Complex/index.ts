@@ -72,6 +72,12 @@ class Complex {
     Math.atan(this.imag / this.real) + (this.real < 0 ? Math.PI : 0)
   
   public neg = () => new Complex(-this.real, -this.imag)
+  
+  public pow = (n: number) => {
+    const z = Math.pow(this.abs(), n)
+    const f = n * this.ang()
+    return new Complex(z * Math.cos(f), z * Math.sin(f))
+  }
 }
 
 export default Complex
