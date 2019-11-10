@@ -1,11 +1,17 @@
 import paths from './paths'
 
+export const landing = () => paths.landing
+export const fractal = () => paths.fractal
+export const colorScheme = () => paths.colorScheme
+export const hexagon = () => paths.hexagon
+export const userGuide = () => paths.userGuide
+
 const links = {
-  landing: () => paths.landing,
-  fractal: () => paths.fractal,
-  colorScheme: () => paths.colorScheme,
-  hexagon: () => paths.hexagon,
-  userGuide: () => paths.userGuide
+  landing,
+  fractal,
+  colorScheme,
+  hexagon,
+  userGuide
 }
 
 export default links

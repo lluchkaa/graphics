@@ -4,19 +4,25 @@ import facebookImage from '../assets/images/social/facebook.svg'
 import twitterImage from '../assets/images/social/twitter.svg'
 import instagramImage from '../assets/images/social/instagram.svg'
 
+export const facebook: ISocialLink = {
+  key: SocialLinkType.facebook,
+  href: '#'
+}
+
+export const twitter: ISocialLink = {
+  key: SocialLinkType.twitter,
+  href: '#'
+}
+
+export const instagram: ISocialLink = {
+  key: SocialLinkType.instagram,
+  href: '#'
+}
+
 const links: ISocialLink[] = [
-  {
-    key: SocialLinkType.facebook,
-    href: '#'
-  },
-  {
-    key: SocialLinkType.twitter,
-    href: '#'
-  },
-  {
-    key: SocialLinkType.instagram,
-    href: '#'
-  }
+  facebook,
+  twitter,
+  instagram
 ]
 
 export const getSocialImage = (key: SocialLinkType) => {
