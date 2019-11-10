@@ -48,8 +48,9 @@ class Fractal extends React.Component<IProps, IState> {
     const values = getInfo(
       this.func(k, c),
       this.df(k, c),
-      zoom,
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
+      zoom,
+      {x: 0, y: 0},
       this.roots
     )
 

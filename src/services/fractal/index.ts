@@ -14,7 +14,7 @@ const baseBounds: IBounds<IPoint2d> = {
   }
 }
 
-const getBounds = (zoom: number, base: IBounds<IPoint2d> = baseBounds): IBounds<IPoint2d> => {
+const getBounds = (zoom: number, center: IPoint2d = { x: 0, y: 0 }, base: IBounds<IPoint2d> = baseBounds): IBounds<IPoint2d> => {
   const curDistX = (base.max.x - base.min.x)
   const curDistY = (base.max.y - base.min.y)
 
@@ -26,12 +26,12 @@ const getBounds = (zoom: number, base: IBounds<IPoint2d> = baseBounds): IBounds<
 
   return {
     min: {
-      x: base.min.x + xDiff,
-      y: base.min.y + yDiff
+      x: base.min.x + center.x + xDiff,
+      y: base.min.y + center.y + yDiff
     },
     max: {
-      x: base.max.x - xDiff,
-      y: base.max.y - yDiff
+      x: base.max.x + center.x - xDiff,
+      y: base.max.y + center.y - yDiff
     }
   }
 }
@@ -40,14 +40,21 @@ const getIterations = (zoom: number): number => (zoom / 2) * 10
 
 const eps = 1e-3
 
+const minZoom = 0
+
 const getInfo = (
   func: (z: Complex) => Complex,
   df: (z: Complex) => Complex,
-  zoom: number,
   sizes: IBounds<IPoint2d>,
+  zoom: number,
+  movedCenter: IPoint2d,
   roots?: IPoint2d[],
   iterations: number = -1,
 ) => {
+  if (zoom <= minZoom) {
+    throw 'bad zoom'
+  }
+
   if (iterations < 0) { iterations = getIterations(zoom) }
 
   const result: Complex[][] = []
@@ -57,7 +64,7 @@ const getInfo = (
       let z = pointToComplex(scalePoint2d(
         { x, y },
         sizes,
-        getBounds(zoom)
+        getBounds(zoom, movedCenter)
       ))
 
       let rootIsFound: boolean = false;
