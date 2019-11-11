@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from '../../elements/Image'
 import { IPoint2d } from '../../../interfaces/IPoint'
-import { zoomBounds } from '../../../services/fractal'
 
 interface IProps {
   image: string
@@ -79,7 +78,7 @@ class Content extends React.Component<IProps, IState> {
     const toZoom = 0.2
 
     let newZoom = zoom
-    const newCenter = center
+    const newCenter = {...center}
 
     switch (keyCode) {
       case Key.UpArrow:
@@ -89,10 +88,10 @@ class Content extends React.Component<IProps, IState> {
         newCenter.y += toMove
         break;
       case Key.LeftArrow:
-        newCenter.x += toMove
+        newCenter.x -= toMove
         break;
       case Key.RightArrow:
-        newCenter.x -= toMove
+        newCenter.x += toMove
         break;
       case Key.ZoomIn:
         newZoom += toZoom
@@ -103,7 +102,7 @@ class Content extends React.Component<IProps, IState> {
       default:
         return;
     }
-    if (newCenter !== center) {
+    if (newCenter.x !== center.x || newCenter.y !== center.y) {
       this.setState({ center: newCenter })
       setCenter(newCenter)
     }
@@ -146,7 +145,7 @@ class Content extends React.Component<IProps, IState> {
           />
           <input
             type="number"
-            value={curZoom * this.scale}
+            value={Math.round(curZoom * this.scale)}
             onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
             onBlur={() => setZoom(this.state.zoom)}
           />
@@ -201,7 +200,7 @@ class Content extends React.Component<IProps, IState> {
               <label>x = </label>
               <input
                 type="number"
-                value={curCenter.x * this.scale}
+                value={Math.round(curCenter.x * this.scale)}
                 onChange={(e) => {
                   const { value } = e.target
                   this.setState(prev => ({
@@ -220,7 +219,7 @@ class Content extends React.Component<IProps, IState> {
               <label>y = </label>
               <input
                 type="number"
-                value={curCenter.y * this.scale}
+                value={Math.round(curCenter.y * this.scale)}
                 onChange={(e) => {
                   const { value } = e.target
                   this.setState(prev => ({
