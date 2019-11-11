@@ -19,6 +19,9 @@ interface IProps {
   center: IPoint2d
   setCenter: (center: IPoint2d) => void
   moveCenter: (xDiff: number, yDiff: number) => void
+
+  iterations: number
+  setIterations: (iter: number) => void
 }
 
 interface IState {
@@ -26,6 +29,7 @@ interface IState {
   c: number
   zoom: number
   center: IPoint2d
+  iterations: number
 }
 
 enum Key {
@@ -47,7 +51,8 @@ class Content extends React.Component<IProps, IState> {
       k: props.k,
       c: props.c,
       zoom: props.zoom,
-      center: props.center
+      center: props.center,
+      iterations: props.iterations
     }
   }
 
@@ -111,21 +116,22 @@ class Content extends React.Component<IProps, IState> {
   render() {
     const {
       image,
-      zoom,
       setZoom,
-      changeZoom,
       k,
       setK,
       c,
       setC,
       center,
-      setCenter
+      setCenter,
+      iterations,
+      setIterations
     } = this.props
     const {
       k: curK,
       c: curC,
       zoom: curZoom,
-      center: curCenter
+      center: curCenter,
+      iterations: curIterations
     } = this.state
     return (
       <div
@@ -174,6 +180,17 @@ class Content extends React.Component<IProps, IState> {
                 value={curC}
                 onChange={(e) => this.setState({ c: +e.target.value })}
                 onBlur={() => curC !== c && setC(curC)}
+              />
+            </div>
+            <div
+              className="input-group"
+            >
+              <label>iterations = </label>
+              <input
+                type="number"
+                value={curIterations}
+                onChange={(e) => this.setState({ iterations: +e.target.value })}
+                onBlur={() => curIterations !== iterations && setIterations(curIterations)}
               />
             </div>
           </div>

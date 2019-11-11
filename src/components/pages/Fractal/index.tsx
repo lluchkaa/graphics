@@ -14,6 +14,7 @@ interface IState {
   k: number
   c: number
   center: IPoint2d
+  iterations: number
 }
 
 class Fractal extends React.Component<IProps, IState> {
@@ -24,7 +25,8 @@ class Fractal extends React.Component<IProps, IState> {
       zoom: 1,
       k: 3,
       c: 1,
-      center: { x: 0, y: 0 }
+      center: { x: 0, y: 0 },
+      iterations: -1
     }
   }
 
@@ -46,7 +48,7 @@ class Fractal extends React.Component<IProps, IState> {
   getFillStyle = (value: Complex): string => `hsl(${value.ang() * 180 / Math.PI}, 100%, 50%)`
 
   getImage = () => {
-    const { zoom, k, c, center } = this.state
+    const { zoom, k, c, center, iterations } = this.state
 
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
@@ -59,7 +61,8 @@ class Fractal extends React.Component<IProps, IState> {
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
       zoom,
       center,
-      this.getRoots()
+      this.getRoots(),
+      (iterations > 0 ? iterations : undefined)
     )
 
     values.forEach((arr, y) => arr.forEach((v, x) => {
@@ -92,8 +95,10 @@ class Fractal extends React.Component<IProps, IState> {
       }
     }))
 
+  setIterations = (iterations: number) => this.setState({ iterations })
+
   render() {
-    const { zoom, k, c, center } = this.state
+    const { zoom, k, c, center, iterations } = this.state
     return (
       <Content
         image={this.getImage()}
@@ -111,6 +116,9 @@ class Fractal extends React.Component<IProps, IState> {
         center={center}
         setCenter={this.setCenter}
         moveCenter={this.moveCenter}
+
+        iterations={iterations}
+        setIterations={this.setIterations}
       />
     )
   }
