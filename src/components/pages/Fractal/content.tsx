@@ -1,6 +1,10 @@
 import React from 'react'
+
 import Image from '../../elements/Image'
 import { IPoint2d } from '../../../interfaces/IPoint'
+import Header from '../../modules/Header'
+
+import './style.scss'
 
 interface IProps {
   image: string
@@ -78,7 +82,7 @@ class Content extends React.Component<IProps, IState> {
     const toZoom = 0.2
 
     let newZoom = zoom
-    const newCenter = {...center}
+    const newCenter = { ...center }
 
     switch (keyCode) {
       case Key.UpArrow:
@@ -136,101 +140,105 @@ class Content extends React.Component<IProps, IState> {
       <div
         className="page fractal"
       >
-        <div
-          className="fractal-wrapper"
-        >
-          <Image
-            className="fractal"
-            src={image}
-          />
-          <input
-            type="number"
-            value={Math.round(curZoom * this.scale)}
-            onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
-            onBlur={() => setZoom(this.state.zoom)}
-          />
-        </div>
-        <div
-          className="info"
-        >
+        <Header />
+        <div className="content">
           <div
-            className="function"
+            className="fractal-wrapper"
           >
-            f(z) = z ^ k + c
+            <Image
+              className="fractal"
+              src={image}
+            />
+            <input
+              className="zoom"
+              type="number"
+              value={Math.round(curZoom * this.scale)}
+              onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
+              onBlur={() => setZoom(this.state.zoom)}
+            />
           </div>
-          <div className="inputs coefs">
+          <div
+            className="info"
+          >
             <div
-              className="input-group"
+              className="function"
             >
-              <label>k = </label>
-              <input
-                type="number"
-                value={curK}
-                onChange={(e) => this.setState({ k: +e.target.value })}
-                onBlur={() => curK !== k && setK(curK)}
-              />
-            </div>
-            <div
-              className="input-group"
-            >
-              <label>c = </label>
-              <input
-                type="number"
-                value={curC}
-                onChange={(e) => this.setState({ c: +e.target.value })}
-                onBlur={() => curC !== c && setC(curC)}
-              />
-            </div>
-            <div
-              className="input-group"
-            >
-              <label>iterations = </label>
-              <input
-                type="number"
-                value={curIterations}
-                onChange={(e) => this.setState({ iterations: +e.target.value })}
-                onBlur={() => curIterations !== iterations && setIterations(curIterations)}
-              />
-            </div>
+              f(z) = z ^ k + c
           </div>
-          <div className="inputs center">
-            <div
-              className="input-group"
-            >
-              <label>x = </label>
-              <input
-                type="number"
-                value={Math.round(curCenter.x * this.scale)}
-                onChange={(e) => {
-                  const { value } = e.target
-                  this.setState(prev => ({
-                    center: {
-                      x: +value / this.scale,
-                      y: prev.center.y
-                    }
-                  }))
-                }}
-                onBlur={() => curCenter !== center && setCenter(curCenter)}
-              />
+            <div className="inputs coefs">
+              <div
+                className="input-group"
+              >
+                <label>k = </label>
+                <input
+                  type="number"
+                  value={curK}
+                  onChange={(e) => this.setState({ k: +e.target.value })}
+                  onBlur={() => curK !== k && setK(curK)}
+                />
+              </div>
+              <div
+                className="input-group"
+              >
+                <label>c = </label>
+                <input
+                  type="number"
+                  value={curC}
+                  onChange={(e) => this.setState({ c: +e.target.value })}
+                  onBlur={() => curC !== c && setC(curC)}
+                />
+              </div>
+              <div
+                className="input-group"
+              >
+                <label>iterations = </label>
+                <input
+                  type="number"
+                  value={curIterations}
+                  onChange={(e) => this.setState({ iterations: +e.target.value })}
+                  onBlur={() => curIterations !== iterations && setIterations(curIterations)}
+                />
+              </div>
             </div>
-            <div
-              className="input-group"
-            >
-              <label>y = </label>
-              <input
-                type="number"
-                value={Math.round(curCenter.y * this.scale)}
-                onChange={(e) => {
-                  const { value } = e.target
-                  this.setState(prev => ({
-                    center: {
-                      x: prev.center.x,
-                      y: +value / this.scale
-                    }
-                  }))
-                }}
-                onBlur={() => curCenter !== center && setCenter(curCenter)}
-              />
+            <div className="inputs center">
+              <div
+                className="input-group"
+              >
+                <label>x = </label>
+                <input
+                  type="number"
+                  value={Math.round(curCenter.x * this.scale)}
+                  onChange={(e) => {
+                    const { value } = e.target
+                    this.setState(prev => ({
+                      center: {
+                        x: +value / this.scale,
+                        y: prev.center.y
+                      }
+                    }))
+                  }}
+                  onBlur={() => curCenter !== center && setCenter(curCenter)}
+                />
+              </div>
+              <div
+                className="input-group"
+              >
+                <label>y = </label>
+                <input
+                  type="number"
+                  value={Math.round(curCenter.y * this.scale)}
+                  onChange={(e) => {
+                    const { value } = e.target
+                    this.setState(prev => ({
+                      center: {
+                        x: prev.center.x,
+                        y: +value / this.scale
+                      }
+                    }))
+                  }}
+                  onBlur={() => curCenter !== center && setCenter(curCenter)}
+                />
+              </div>
             </div>
           </div>
         </div>
