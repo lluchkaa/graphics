@@ -23,7 +23,7 @@ const getBounds = (zoom: number, center: IPoint2d = { x: 0, y: 0 }, base: IBound
 
   const xDiff = (curDistX - newDistX) / 2
   const yDiff = (curDistY - newDistY) / 2
-  
+
   return {
     min: {
       x: base.min.x + center.x + xDiff,
@@ -51,7 +51,6 @@ const getInfo = (
   sizes: IBounds<IPoint2d>,
   zoom: number,
   movedCenter: IPoint2d,
-  roots?: IPoint2d[],
   iterations: number = -1,
 ) => {
   // if (zoom < zoomBounds.min || zoom > zoomBounds.max) {
@@ -81,13 +80,9 @@ const getInfo = (
 
       let rootIsFound: boolean = false;
       for (let i = 0; i < iterations; ++i) {
-        roots && roots.forEach(r => {
-          if (Complex.sub([pointToComplex(r), z]).abs() < eps) {
-            rootIsFound = true
-          }
-        })
-
-        if (rootIsFound) { break }
+        if (func(z).abs() < eps) {
+          break
+        }
 
         z = Complex.sub([
           z,
