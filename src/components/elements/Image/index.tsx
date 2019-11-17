@@ -6,13 +6,14 @@ interface IProps {
   src: string
   alt?: string
   className?: string
+  onClick?: (event: React.MouseEvent) => void
 }
 
 const Image: React.FC<IProps> = (props: IProps) => {
-  const { src, alt, className: propClassName } = props
+  const { src, alt, className: propClassName, onClick } = props
   const className = 'image-box' + (propClassName ? ` ${propClassName}` : '')
   return (
-    <div className={className}>
+    <div className={className} onClick={onClick}>
       <img
         src={src}
         alt={alt || ''}

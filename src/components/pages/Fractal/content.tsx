@@ -116,6 +116,27 @@ class Content extends React.Component<IProps, IState> {
     }
   }
 
+  onImageClick = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const xPos = e.clientX - rect.left
+    const yPos = e.clientY - rect.top
+
+    const xDiff = (xPos - (rect.width / 2)) / rect.width
+    const yDiff = (yPos - (rect.height / 2)) / rect.height
+
+    const { zoom, setZoom, center, setCenter } = this.props
+
+    const newZoom = zoom + 0.2
+    const newCenter: IPoint2d = {
+      x: center.x + xDiff / zoom,
+      y: center.y + yDiff / zoom
+    }
+
+    setZoom(newZoom)
+    setCenter(newCenter)
+    this.setState({ zoom: newZoom, center: newCenter })
+  }
+
   render() {
     const {
       image,
@@ -148,6 +169,7 @@ class Content extends React.Component<IProps, IState> {
             <Image
               className="fractal"
               src={image}
+              onClick={this.onImageClick}
             />
             <input
               className="zoom"
