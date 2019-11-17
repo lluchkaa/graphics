@@ -6,7 +6,7 @@ import Complex from '../../../services/Complex'
 import { IPoint2d } from '../../../interfaces/IPoint'
 import IBounds, { NumBounds } from '../../../interfaces/IBounds'
 import { baseBounds, zoomBounds } from '../../../services/fractal'
-import { complexToPoint } from '../../../services/numHelper'
+import newtonFuncs from '../../../services/NewtonFuncs'
 
 interface IProps { }
 interface IState {
@@ -35,11 +35,6 @@ class Fractal extends React.Component<IProps, IState> {
   zoomBounds: NumBounds = zoomBounds
   centerBounds: IBounds<IPoint2d> = baseBounds
 
-  func = (k: number, c: number) =>
-    (z: Complex) => Complex.sub([z.pow(k), new Complex(c, 0)])
-  df = (k: number, c: number) =>
-    (z: Complex) => Complex.mul([new Complex(k, 0), z.pow(k - 1)])
-
   getFillStyle = (value: Complex): string => `hsl(${value.ang() * 180 / Math.PI}, 100%, 50%)`
 
   getImage = () => {
@@ -51,8 +46,8 @@ class Fractal extends React.Component<IProps, IState> {
     canvas.width = this.size
 
     const values = getInfo(
-      this.func(k, c),
-      this.df(k, c),
+      newtonFuncs.func(k, c),
+      newtonFuncs.df(k, c),
       { min: { x: 0, y: 0 }, max: { x: canvas.width, y: canvas.height } },
       zoom,
       center,
