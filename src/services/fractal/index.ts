@@ -49,8 +49,8 @@ const getInfo = (
   func: (z: Complex) => Complex,
   df: (z: Complex) => Complex,
   sizes: IBounds<IPoint2d>,
-  zoom: number,
-  movedCenter: IPoint2d,
+  zoom: number = 1,
+  movedCenter: IPoint2d = {x: 0, y: 0},
   iterations: number = -1,
 ) => {
   // if (zoom < zoomBounds.min || zoom > zoomBounds.max) {
@@ -78,7 +78,6 @@ const getInfo = (
         bounds
       ))
 
-      let rootIsFound: boolean = false;
       for (let i = 0; i < iterations; ++i) {
         if (func(z).abs() < eps) {
           break
