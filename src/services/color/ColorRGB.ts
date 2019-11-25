@@ -7,6 +7,16 @@ class ColorRGB implements Color {
   private _blue: number
 
   constructor(red: number, green: number, blue: number) {
+    if (
+      red < 0 ||
+      red > 255 ||
+      green < 0 ||
+      green > 255 ||
+      blue < 0 ||
+      blue > 255
+    ) {
+      throw 'bad colors'
+    }
     this._red = red
     this._green = green
     this._blue = blue
@@ -38,7 +48,7 @@ class ColorRGB implements Color {
   public getColor = () =>
     `#${this.hex(this.red)}${this.hex(this.green)}${this.hex(this.blue)}`
 
-  public normalized = () => {
+  private normalized = () => {
     const { red: r, green: g, blue: b } = this
 
     const base = 255
@@ -57,22 +67,28 @@ class ColorRGB implements Color {
     const min = Math.min(red, green, blue)
     const delta = max - min
 
-    const start = Math.PI / 3
+    if (delta === 0) {
+      return 0
+    }
 
+    const start = 60
     let hue = 0
 
     switch (max) {
       case red:
         hue = start * ((green - blue) / delta)
+        break
       case green:
-        hue = start * ((blue - red) / delta) + (2 / 3) * Math.PI
+        hue = start * ((blue - red) / delta) + 120
+        break
       case blue:
-        hue = start * ((red - green) / delta) + (4 / 3) * Math.PI
+        hue = start * ((red - green) / delta) + 240
+        break
     }
 
-    const d360 = 2 * Math.PI
+    const base = 360
 
-    hue = (hue + d360) % d360
+    hue = (hue + base) % base
     return hue
   }
 
@@ -85,9 +101,11 @@ class ColorRGB implements Color {
 
     const hue = this.getHue()
 
-    const light = (max - min) / 2
+    const light = (max + min) / 2
 
-    const saturation = delta / (2 * (light > 0.5 ? 1 - light : light))
+    const saturation = light
+      ? delta / (2 * (light > 0.5 ? 1 - light : light))
+      : 0
 
     return new ColorHSL(hue, saturation, light)
   }
