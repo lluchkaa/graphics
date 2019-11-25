@@ -104,7 +104,9 @@ class ColorRGB implements Color {
     const light = (max + min) / 2
 
     const saturation = light
-      ? delta / (2 * (light > 0.5 ? 1 - light : light))
+      ? light == 1
+        ? 1
+        : delta / (2 * (light > 0.5 ? 1 - light : light))
       : 0
 
     return new ColorHSL(hue, saturation, light)

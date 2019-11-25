@@ -15,6 +15,7 @@ class ColorHSL implements Color {
       light < 0 ||
       light > 1
     ) {
+      console.error(`hue: ${hue} saturation: ${saturation} light: ${light}`)
       throw 'bad values'
     }
 
@@ -72,8 +73,8 @@ class ColorHSL implements Color {
     const h = hue / 60
     const x = c * (1 - Math.abs((h % 2) - 1))
 
-    const m = 0.5 * c
-    const res = this.fromCX(h, c, x).map((v) => (v + m) * 255)
+    const m = light - c / 2
+    const res = this.fromCX(h, c, x).map((v) => Math.round((v + m) * 255))
     return new ColorRGB(res[0], res[1], res[2])
   }
 }
