@@ -2,36 +2,46 @@ import React from 'react'
 import ImageType from '../../../interfaces/Image'
 import { getValueFromInput } from '../../../services/data'
 import Image from '../../elements/Image'
+import Color from '../../../services/color/Color'
 
 interface IProps {
   image: ImageType
-  light: number
+  lightDiff: number
   onLightChange: (light: number) => void
   onImageLoad: (image: ImageType) => void
+  getPixelColor: (x: number, y: number) => Color | null
 }
 
-const Content: React.FC<IProps> = (props: IProps) => (
-  <div className="page color-scheme">
-    <input
-      type="file"
-      onChange={async (e) => {
-        const data = await getValueFromInput(e)
-        props.onImageLoad(data)
-      }}
-    />
-    <Image src={props.image || ''} />
-    <input
-      type="range"
-      min={-50}
-      max={50}
-      value={props.light * 100}
-      step={10}
-      onChange={async (e) => {
-        const value = await getValueFromInput(e)
-        props.onLightChange(+value / 100)
-      }}
-    />
-  </div>
-)
-
+const Content: React.FC<IProps> = (props: IProps) => {
+  const onMouseOver = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    console.log('color', props.getPixelColor(x, y))
+  }
+  
+  return (
+    <div className="page color-scheme">
+      <input
+        type="file"
+        onChange={async (e) => {
+          const data = await getValueFromInput(e)
+          props.onImageLoad(data)
+        }}
+      />
+      <Image src={props.image || ''} onMouseOver={onMouseOver} />
+      <input
+        type="range"
+        min={-1}
+        max={1}
+        value={props.lightDiff}
+        step={0.1}
+        onChange={async (e) => {
+          const value = await getValueFromInput(e)
+          props.onLightChange(Number(value))
+        }}
+      />
+    </div>
+  )
+}
 export default Content

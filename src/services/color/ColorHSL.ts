@@ -77,6 +77,8 @@ class ColorHSL implements Color {
     const res = this.fromCX(h, c, x).map((v) => Math.round((v + m) * 255))
     return new ColorRGB(res[0], res[1], res[2])
   }
+
+  public copy = () => new ColorHSL(this.hue, this.saturation, this.light)
 }
 
 export default ColorHSL

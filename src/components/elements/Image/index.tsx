@@ -1,19 +1,21 @@
 import React from 'react'
 
 import './style.scss'
+import classNames from 'classnames'
 
 interface IProps {
   src: string
   alt?: string
   className?: string
   onClick?: (event: React.MouseEvent) => void
+  onMouseOver?: (event: React.MouseEvent) => void
 }
 
 const Image: React.FC<IProps> = (props: IProps) => {
-  const { src, alt, className: propClassName, onClick } = props
-  const className = 'image-box' + (propClassName ? ` ${propClassName}` : '')
+  const { src, alt, className: propClassName, onClick, onMouseOver } = props
+  const className = classNames('image-box', propClassName)
   return (
-    <div className={className} onClick={onClick}>
+    <div className={className} onClick={onClick} onMouseOver={onMouseOver}>
       <img
         src={src}
         alt={alt || ''}

@@ -1,5 +1,6 @@
 import Color from './Color'
 import ColorHSL from './ColorHSL'
+import { bigIntLiteral } from '@babel/types'
 
 class ColorRGB implements Color {
   private _red: number
@@ -111,6 +112,7 @@ class ColorRGB implements Color {
 
     return new ColorHSL(hue, saturation, light)
   }
+  public copy = () => new ColorRGB(this.red, this.green, this.blue)
 }
 
 export default ColorRGB

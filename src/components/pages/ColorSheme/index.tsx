@@ -2,29 +2,30 @@ import React from 'react'
 
 import Content from './content'
 import Image from '../../../interfaces/Image'
+import ColorHSL from '../../../services/color/ColorHSL'
 import ColorRGB from '../../../services/color/ColorRGB'
 
 interface IProps {}
 interface IState {
-  image: ColorRGB[][]
-  light: number
+  image: ColorHSL[][]
+  lightDiff: number
   imageSize: { width: number; height: number }
 }
 
 class ColorScheme extends React.Component<IProps, IState> {
-  private static defaultLight = 0.5
+  private static defaultLight = 0.0
 
   constructor(props: IProps) {
     super(props)
     this.state = {
       image: [],
-      light: ColorScheme.defaultLight,
+      lightDiff: ColorScheme.defaultLight,
       imageSize: { width: 0, height: 0 }
     }
   }
 
-  onLightChange = (light: number) =>
-    light >= 0 && light <= 1 && this.setState({ light })
+  onLightChange = (lightDiff: number) =>
+    lightDiff >= -1 && lightDiff <= 1 && this.setState({ lightDiff })
 
   onImageLoad = (image: Image) => {
     if (!image) {
@@ -41,25 +42,25 @@ class ColorScheme extends React.Component<IProps, IState> {
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const base = 4
 
-      const image: ColorRGB[][] = []
+      const image: ColorHSL[][] = []
 
-      for (let i = 0; i < canvas.height; ++i) {
+      for (let j = 0; j < canvas.width; ++j) {
         image.push([])
-        for (let j = 0; j < canvas.width; ++j) {
+        for (let i = 0; i < canvas.height; ++i) {
           const index = (i * canvas.width + j) * base
 
-          image[i].push(
+          image[j].push(
             new ColorRGB(
               imageData.data[index],
               imageData.data[index + 1],
               imageData.data[index + 2]
-            )
+            ).toHSL()
           )
         }
       }
       this.setState({
         image,
-        light: ColorScheme.defaultLight,
+        lightDiff: ColorScheme.defaultLight,
         imageSize: { width: img.width, height: img.height }
       })
     }
@@ -70,7 +71,7 @@ class ColorScheme extends React.Component<IProps, IState> {
     const {
       imageSize: { width, height },
       image,
-      light
+      lightDiff
     } = this.state
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
@@ -79,8 +80,8 @@ class ColorScheme extends React.Component<IProps, IState> {
 
     image.forEach((row, x) =>
       row.forEach((color, y) => {
-        const newColor = color.toHSL()
-        newColor.light += light
+        const newColor = color.copy()
+        newColor.light += lightDiff
         ctx.fillStyle = newColor.getColor()
         ctx.fillRect(x, y, 1, 1)
       })
@@ -89,15 +90,24 @@ class ColorScheme extends React.Component<IProps, IState> {
     return canvas.toDataURL()
   }
 
+  getPixelColor = (x: number, y: number) => {
+    const { image } = this.state
+    if (x >= 0 && x < image[y].length && y >= 0 && y <= image.length) {
+      return image[y][x]
+    }
+    return null
+  }
+
   render() {
-    const { light } = this.state
+    const { lightDiff } = this.state
     const image = this.getLightedImage()
     return (
       <Content
         image={image}
         onImageLoad={this.onImageLoad}
         onLightChange={this.onLightChange}
-        light={light}
+        lightDiff={lightDiff}
+        getPixelColor={this.getPixelColor}
       />
     )
   }
