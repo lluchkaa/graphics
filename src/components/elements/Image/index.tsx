@@ -1,7 +1,6 @@
 import React from 'react'
 
 import './style.scss'
-import classNames from 'classnames'
 
 interface IProps {
   src: string
@@ -13,7 +12,8 @@ interface IProps {
 
 const Image: React.FC<IProps> = (props: IProps) => {
   const { src, alt, className: propClassName, onClick, onMouseOver } = props
-  const className = classNames('image-box', propClassName)
+  const className ='image-box'  + (propClassName ? ` ${propClassName}` : '')
+
   return (
     <div className={className} onClick={onClick} onMouseOver={onMouseOver}>
       <img
