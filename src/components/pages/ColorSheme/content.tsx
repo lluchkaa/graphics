@@ -35,7 +35,7 @@ const Content: React.FC<IProps> = (props: IProps) => {
         min={-1}
         max={1}
         value={props.lightDiff}
-        step={0.1}
+        step={0.05}
         onChange={async (e) => {
           const value = await getValueFromInput(e)
           props.onLightChange(Number(value))
