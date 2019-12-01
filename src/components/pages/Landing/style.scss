@@ -1,6 +1,10 @@
 @import '../../../constants/variables.scss';
 
 .landing {
+    .img-logo {
+        margin-top: 110px;
+    }
+
     .user-guide-text {
         position: absolute;
         width: 150px;
@@ -16,6 +20,7 @@
         margin: auto;
         width: 994px;
         justify-content: space-between;
+        margin-top: 49px;
 
         .card {
             width: 285px;

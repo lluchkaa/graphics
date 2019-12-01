@@ -24,7 +24,7 @@ const Content: React.FC<IProps> = (props: IProps) => (
     <RouterLink to={path.userGuide}>
       <p className="user-guide-text">?</p>
     </RouterLink>
-    <img src={logo} alt="logo" />
+    <img src={logo} alt="logo" className="img-logo"/>
     <div className="main-navigation">
       <RouterLink to={path.hexagon}>
         <div className="card hexagon-link">
