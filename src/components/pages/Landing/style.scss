@@ -11,7 +11,7 @@
         right: 56px;
         top: 70px;
         font-weight: 500;
-        font-size: 90px;
+        font-size: 5.625rem;
         color: $electricViolet;
     }
 
@@ -21,10 +21,10 @@
         left: -80px;
         bottom: 340px;
         font-weight: bold;
-        font-size: 28px;
+        font-size: 1.75rem;
         display: flex;
         justify-content: space-between;
-        color: #8621F3;
+        color: $electricViolet;
         transform: rotate(-90deg);
     }
 
@@ -66,6 +66,97 @@
             width: 404px;
             height: 100px;
             margin: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .landing {
+
+        .user-guide-text {
+            right: 30px;
+            top: 35px;
+        }
+
+        .authors {
+            width: 250px;
+            font-size: 1.5rem;
+        }
+
+        .main-navigation {
+            width: 700px;
+            margin-top: 60px;
+
+            .card {
+                width: 200px;
+                height: 250px;
+
+                .img-logo {
+                    margin-top: 28px;
+                    height: 100px;
+                    width: 100px;
+                }
+
+                .title-link {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .landing {
+
+        .authors {
+            left: 30px;
+            bottom: 120px;
+            transform: rotate(0deg);
+        }
+
+        .main-navigation {
+            width: 650px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .landing {
+        .img-logo {
+            width: 80%;
+        }
+    
+        .user-guide-text {
+            width: 100px;
+            right: 0px;
+        }
+    
+        .authors {
+            display: none;
+        }
+    
+        .main-navigation {
+            flex-direction: column;
+            width: 300px;
+    
+            .card {
+                width: 100%;
+                border: 2px solid $electricViolet;
+                margin-bottom: 30px;
+    
+                .title-link {
+                    font-size: 1.7rem;
+                }
+            }
+        }
+    
+        .block-social-links {
+            position: relative;
+            margin-top: 50px;
+    
+            .social-links {
+                width: 320px;
+            }
         }
     }
 }
