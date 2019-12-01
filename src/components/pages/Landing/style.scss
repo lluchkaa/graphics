@@ -1,0 +1,27 @@
+@import '../../../constants/variables.scss';
+
+.landing {
+    .main-navigation {
+        display: flex;
+        margin: auto;
+        width: 994px;
+        height: 300px;
+        justify-content: space-between;
+
+        .card {
+            width: 285px;
+            border: 4px solid $electricViolet;
+            border-radius: 40px;
+
+            .img-logo {
+                margin-top: 48px;
+            }
+
+            .title-link {
+                margin-top: 40px;
+                font-size: 2.25rem;
+                color: $electricViolet;
+            }
+        }
+    }
+}

@@ -3,7 +3,7 @@ import routeLinks from '../routes/links'
 
 import fractalImage from '../assets/images/contentLogos/fractal.png'
 import colorSchemeImage from '../assets/images/contentLogos/colorScheme.png'
-import hexagonImage from '../assets/images/contentLogos/hexagon.svg'
+import hexagonImage from '../assets/images/contentLogos/hexagon.png'
 
 const fractal: IContentLink = {
   key: ContentLinkType.fractal,
