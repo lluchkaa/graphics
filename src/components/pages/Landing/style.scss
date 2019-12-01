@@ -15,6 +15,19 @@
         color: $electricViolet;
     }
 
+    .authors {
+        position: absolute;
+        width: 285px;
+        left: -80px;
+        bottom: 340px;
+        font-weight: bold;
+        font-size: 28px;
+        display: flex;
+        justify-content: space-between;
+        color: #8621F3;
+        transform: rotate(-90deg);
+    }
+
     .main-navigation {
         display: flex;
         margin: auto;
