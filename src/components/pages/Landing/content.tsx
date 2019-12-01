@@ -1,5 +1,9 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
+import path from '../../../routes/paths'
+
 import './style.scss'
 
 interface IProps { }
@@ -15,20 +19,26 @@ const Content: React.FC<IProps> = (props: IProps) => (
   >
     <img src={logo} alt="logo" />
     <div className="main-navigation">
-      <div className="card hexagon-link">
-        <img src={hexagon} alt="hexagon" className="img-logo"/>
-        <p className="title-link">Hexagon</p>
-      </div>
+      <Link to={path.hexagon}>
+        <div className="card hexagon-link">
+          <img src={hexagon} alt="hexagon" className="img-logo" />
+          <p className="title-link">Hexagon</p>
+        </div>
+      </Link>
+      <Link to={path.colorScheme}>
       <div className="card color-scheme-link">
-        <img src={colorScheme} alt="color scheme" className="img-logo"/>
+        <img src={colorScheme} alt="color scheme" className="img-logo" />
         <p className="title-link">Color Scheme</p>
       </div>
+      </Link>
+      <Link to={path.hexagon}>
       <div className="card fractal-link">
-        <img src={fractal} alt="fractal" className="img-logo"/>
+        <img src={fractal} alt="fractal" className="img-logo" />
         <p className="title-link">Fractal</p>
       </div>
+      </Link>
     </div>
-  </div>
+  </div >
 )
 
 export default Content
