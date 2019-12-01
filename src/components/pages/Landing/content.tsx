@@ -17,6 +17,9 @@ const Content: React.FC<IProps> = (props: IProps) => (
   <div
     className="page landing"
   >
+    <Link to={path.userGuide}>
+      <p className="user-guide-text">?</p>
+    </Link>
     <img src={logo} alt="logo" />
     <div className="main-navigation">
       <Link to={path.hexagon}>
@@ -31,7 +34,7 @@ const Content: React.FC<IProps> = (props: IProps) => (
         <p className="title-link">Color Scheme</p>
       </div>
       </Link>
-      <Link to={path.hexagon}>
+      <Link to={path.fractal}>
       <div className="card fractal-link">
         <img src={fractal} alt="fractal" className="img-logo" />
         <p className="title-link">Fractal</p>

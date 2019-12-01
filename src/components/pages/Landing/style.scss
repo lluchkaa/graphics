@@ -1,6 +1,16 @@
 @import '../../../constants/variables.scss';
 
 .landing {
+    .user-guide-text {
+        position: absolute;
+        width: 150px;
+        right: 56px;
+        top: 70px;
+        font-weight: 500;
+        font-size: 90px;
+        color: $electricViolet;
+    }
+
     .main-navigation {
         display: flex;
         margin: auto;
@@ -22,11 +32,6 @@
                 font-size: 2.25rem;
                 color: $electricViolet;
             }
-        }
-
-        .card:hover {
-           // background-color: aqua;
-           // cursor: pointer;
         }
     }
 }
