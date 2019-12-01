@@ -34,4 +34,20 @@
             }
         }
     }
+
+    .block-social-links {
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+        background: $electricViolet;
+
+        .social-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 404px;
+            height: 100px;
+            margin: auto;
+        }
+    }
 }
