@@ -28,7 +28,7 @@ const Content: React.FC<IProps> = (props: IProps) => (
       <p>Luchka</p>
       <p>Tarasenko</p>
     </div>
-    <img src={logo} alt="logo" className="img-logo" />
+    <img src={logo} alt="logo" className="img-logo-main" />
     <div className="main-navigation">
       <RouterLink to={path.hexagon}>
         <div className="card hexagon-link">

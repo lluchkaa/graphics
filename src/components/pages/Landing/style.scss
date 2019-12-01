@@ -1,7 +1,7 @@
 @import '../../../constants/variables.scss';
 
 .landing {
-    .img-logo {
+    .img-logo-main {
         margin-top: 110px;
     }
 
@@ -122,40 +122,98 @@
 
 @media screen and (max-width: 768px) {
     .landing {
-        .img-logo {
+        .img-logo-main {
             width: 80%;
         }
-    
+
         .user-guide-text {
             width: 100px;
             right: 0px;
         }
-    
+
         .authors {
             display: none;
         }
-    
+
         .main-navigation {
             flex-direction: column;
             width: 300px;
-    
+
             .card {
                 width: 100%;
                 border: 2px solid $electricViolet;
                 margin-bottom: 30px;
-    
+
                 .title-link {
                     font-size: 1.7rem;
                 }
             }
         }
-    
+
         .block-social-links {
             position: relative;
             margin-top: 50px;
-    
+
             .social-links {
-                width: 320px;
+                width: 310px;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 900px) and (min-width: 1024px) {
+    .landing {
+        .img-logo-main {
+            margin-top: 40px;
+            width: 400px;
+            height: 320px;
+        }
+
+
+        .user-guide-text {
+            right: 0px;
+            top: 30px;
+        }
+
+        .authors {
+            width: 240px;
+            font-size: 1.3rem;
+            bottom: 250px;
+        }
+
+        .main-navigation {
+            margin-top: 40px;
+            width: 800px;
+
+            .card {
+                height: 230px;
+                width: 240px;
+                border: 2px solid $electricViolet;
+                margin-bottom: 30px;
+
+                .img-logo {
+                    margin-top: 30px;
+                    height: 100px;
+                    width: 100px;
+                }
+
+                .title-link {
+                    margin-top: 30px;
+                    font-size: 1.75rem;
+                }
+            }
+        }
+
+        .block-social-links {
+
+            .social-links {
+                height: 70px;
+                width: 300px;
+            }
+
+            .img-social {
+                width: 50px;
+                height: 50px;
             }
         }
     }
