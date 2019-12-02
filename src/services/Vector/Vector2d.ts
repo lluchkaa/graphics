@@ -7,6 +7,9 @@ class Vector2d {
     this._y = y
   }
 
+  public static fromAbsAng = (abs: number, ang: number) =>
+    new Vector2d(abs * Math.cos(ang), abs * Math.sin(ang))
+
   public get x(): number {
     return this._x
   }
