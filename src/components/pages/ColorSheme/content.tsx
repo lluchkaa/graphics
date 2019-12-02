@@ -4,23 +4,36 @@ import { getValueFromInput } from '../../../services/data'
 import Image from '../../elements/Image'
 import Color from '../../../services/color/Color'
 import ColorInput from '../../elements/ColorInput'
+import ColorHSL from '../../../services/color/ColorHSL'
 
 interface IProps {
   image: ImageType
   lightDiff: number
   onLightChange: (light: number) => void
   onImageLoad: (image: ImageType) => void
-  getPixelColor: (x: number, y: number) => Color | null
+  getPixelColor: (
+    x: number,
+    y: number,
+    width?: number,
+    height?: number
+  ) => Color | null
+  selectedColor: ColorHSL
+  onColorChange: (color: string) => void
 }
 
 const Content: React.FC<IProps> = (props: IProps) => {
-  const onMouseOver = (e: React.MouseEvent) => {
+  const onMouseMove = (e: React.MouseEvent) => {
+    const { image } = props
     const rect = e.currentTarget.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
-    console.log('color', props.getPixelColor(x, y))
+    console.log('color', props.getPixelColor(x, y, rect.width, rect.height))
   }
-  
+
+  const onColorChange = (color: string) => {
+    props.onColorChange(color)
+  }
+
   return (
     <div className="page color-scheme">
       <input
@@ -30,8 +43,11 @@ const Content: React.FC<IProps> = (props: IProps) => {
           props.onImageLoad(data)
         }}
       />
-      <ColorInput color="#ff0000"/>
-      <Image src={props.image || ''} onMouseOver={onMouseOver} />
+      <ColorInput
+        color={props.selectedColor.toRGB().getColor()}
+        onChange={onColorChange}
+      />
+      <Image src={props.image || ''} onMouseMove={onMouseMove} />
       <input
         type="range"
         min={-1}
