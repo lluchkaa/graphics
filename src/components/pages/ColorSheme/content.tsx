@@ -3,6 +3,7 @@ import ImageType from '../../../interfaces/Image'
 import { getValueFromInput } from '../../../services/data'
 import Image from '../../elements/Image'
 import Color from '../../../services/color/Color'
+import ColorInput from '../../elements/ColorInput'
 
 interface IProps {
   image: ImageType
@@ -29,6 +30,7 @@ const Content: React.FC<IProps> = (props: IProps) => {
           props.onImageLoad(data)
         }}
       />
+      <ColorInput color="#ff0000"/>
       <Image src={props.image || ''} onMouseOver={onMouseOver} />
       <input
         type="range"

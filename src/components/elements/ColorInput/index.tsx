@@ -10,7 +10,7 @@ interface IProps {
   className?: string
 }
 
-const ImageInput: React.FC<IProps> = (props) => {
+const ColorInput: React.FC<IProps> = (props) => {
   const { color, onChange, onNativeChange, className } = props
 
   const ref = React.useRef<HTMLInputElement>(null)
@@ -43,4 +43,4 @@ const ImageInput: React.FC<IProps> = (props) => {
   )
 }
 
-export default ImageInput
+export default ColorInput
