@@ -10,6 +10,7 @@ interface IState {
   image: ColorHSL[][]
   lightDiff: number
   imageSize: { width: number; height: number }
+  selectedColor: ColorHSL
 }
 
 class ColorScheme extends React.Component<IProps, IState> {
@@ -20,8 +21,29 @@ class ColorScheme extends React.Component<IProps, IState> {
     this.state = {
       image: [],
       lightDiff: ColorScheme.defaultLight,
-      imageSize: { width: 0, height: 0 }
+      imageSize: { width: 0, height: 0 },
+      selectedColor: new ColorHSL(0, 0, 0)
     }
+  }
+
+  private inRange = (
+    value: number,
+    center: number,
+    diff: number,
+    maxValue: number = 0
+  ) => {
+    return (
+      Math.abs(value - center) <= diff ||
+      Math.abs(value + maxValue - center) <= diff ||
+      Math.abs(value - maxValue - center) <= diff
+    )
+  }
+
+  onColorChange = (color: string) => {
+    const red = parseInt(color.substr(1, 2), 16)
+    const green = parseInt(color.substr(3, 2), 16)
+    const blue = parseInt(color.substr(5, 2), 16)
+    this.setState({ selectedColor: new ColorRGB(red, green, blue).toHSL() })
   }
 
   onLightChange = (lightDiff: number) =>
@@ -44,12 +66,12 @@ class ColorScheme extends React.Component<IProps, IState> {
 
       const image: ColorHSL[][] = []
 
-      for (let j = 0; j < canvas.width; ++j) {
+      for (let i = 0; i < canvas.height; ++i) {
         image.push([])
-        for (let i = 0; i < canvas.height; ++i) {
+        for (let j = 0; j < canvas.width; ++j) {
           const index = (i * canvas.width + j) * base
 
-          image[j].push(
+          image[i].push(
             new ColorRGB(
               imageData.data[index],
               imageData.data[index + 1],
@@ -71,17 +93,24 @@ class ColorScheme extends React.Component<IProps, IState> {
     const {
       imageSize: { width, height },
       image,
-      lightDiff
+      lightDiff,
+      selectedColor
     } = this.state
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
     canvas.height = height
     canvas.width = width
 
-    image.forEach((row, x) =>
-      row.forEach((color, y) => {
+    image.forEach((row, y) =>
+      row.forEach((color, x) => {
         const newColor = color.copy()
-        newColor.light += lightDiff
+        if (
+          this.inRange(newColor.hue, selectedColor.hue, 40, 360) &&
+          this.inRange(newColor.saturation, selectedColor.saturation, 0.2) &&
+          this.inRange(newColor.light, selectedColor.light, 0.2)
+        ) {
+          newColor.light += lightDiff
+        }
         ctx.fillStyle = newColor.getColor()
         ctx.fillRect(x, y, 1, 1)
       })
@@ -90,16 +119,28 @@ class ColorScheme extends React.Component<IProps, IState> {
     return canvas.toDataURL()
   }
 
-  getPixelColor = (x: number, y: number) => {
+  getPixelColor = (x: number, y: number, width?: number, height?: number) => {
     const { image } = this.state
-    if (x >= 0 && x < image[y].length && y >= 0 && y <= image.length) {
+    if (height) {
+      y = Math.trunc((y * image.length) / height)
+    }
+    if (width) {
+      x = Math.trunc((x * image[y].length) / width)
+    }
+    if (
+      y >= 0 &&
+      y <= image.length &&
+      image[y] &&
+      x >= 0 &&
+      x < image[y].length
+    ) {
       return image[y][x]
     }
     return null
   }
 
   render() {
-    const { lightDiff } = this.state
+    const { lightDiff, selectedColor } = this.state
     const image = this.getLightedImage()
     return (
       <Content
@@ -108,6 +149,8 @@ class ColorScheme extends React.Component<IProps, IState> {
         onLightChange={this.onLightChange}
         lightDiff={lightDiff}
         getPixelColor={this.getPixelColor}
+        selectedColor={selectedColor}
+        onColorChange={this.onColorChange}
       />
     )
   }
