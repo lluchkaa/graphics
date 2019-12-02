@@ -3,6 +3,7 @@ import ImageType from '../../../interfaces/Image'
 import { getValueFromInput } from '../../../services/data'
 import Image from '../../elements/Image'
 import Color from '../../../services/color/Color'
+import Header from '../../modules/Header'
 
 interface IProps {
   image: ImageType
@@ -22,6 +23,7 @@ const Content: React.FC<IProps> = (props: IProps) => {
   
   return (
     <div className="page color-scheme">
+      <Header/>
       <input
         type="file"
         onChange={async (e) => {
