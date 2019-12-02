@@ -24,7 +24,7 @@ const Navigation: React.FC<IProps> = (props: IProps) => (
         </RouteLink>
       </MenuItem>
     ))}
-    <MenuItem className="link-item">
+    <MenuItem className="content-link-item link-item">
       <RouteLink
         to={links.userGuide()}
         className="link user-guide"

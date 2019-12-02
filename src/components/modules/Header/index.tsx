@@ -12,7 +12,7 @@ interface IProps {}
 const Header: React.FC<IProps> = (props: IProps) => (
   <header className="header">
     <div className="logo">
-      {/* <Image src={logo} className="logo-img" /> */}
+      <Image src={logo} className="logo-img" />
     </div>
     <Navigation />
   </header>

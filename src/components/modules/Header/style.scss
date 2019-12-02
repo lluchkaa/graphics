@@ -4,4 +4,15 @@
     width: 100%;
     height: 100px;
     background: $electricViolet;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logo{
+        width: auto;
+        margin-left: 62px;
+        .logo-img {
+            width: 110px;
+            height: 80px;
+        }
+    }
 }
