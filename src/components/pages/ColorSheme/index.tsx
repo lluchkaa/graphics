@@ -26,6 +26,19 @@ class ColorScheme extends React.Component<IProps, IState> {
     }
   }
 
+  private inRange = (
+    value: number,
+    center: number,
+    diff: number,
+    maxValue: number = 0
+  ) => {
+    return (
+      Math.abs(value - center) <= diff ||
+      Math.abs(value + maxValue - center) <= diff ||
+      Math.abs(value - maxValue - center) <= diff
+    )
+  }
+
   onColorChange = (color: string) => {
     const red = parseInt(color.substr(1, 2), 16)
     const green = parseInt(color.substr(3, 2), 16)
@@ -80,7 +93,8 @@ class ColorScheme extends React.Component<IProps, IState> {
     const {
       imageSize: { width, height },
       image,
-      lightDiff
+      lightDiff,
+      selectedColor
     } = this.state
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
@@ -90,7 +104,13 @@ class ColorScheme extends React.Component<IProps, IState> {
     image.forEach((row, y) =>
       row.forEach((color, x) => {
         const newColor = color.copy()
-        newColor.light += lightDiff
+        if (
+          this.inRange(newColor.hue, selectedColor.hue, 40, 360) &&
+          this.inRange(newColor.saturation, selectedColor.saturation, 0.2) &&
+          this.inRange(newColor.light, selectedColor.light, 0.2)
+        ) {
+          newColor.light += lightDiff
+        }
         ctx.fillStyle = newColor.getColor()
         ctx.fillRect(x, y, 1, 1)
       })
