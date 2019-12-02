@@ -3,14 +3,16 @@ import { Link as RouteLink } from 'react-router-dom'
 
 import links from '../../../routes/links'
 import contentLinks from '../../../constants/contentLinks'
-import { longStackSupport } from 'q'
+import { MenuList, MenuItem } from '@material-ui/core'
+
+import './style.scss'
 
 interface IProps { }
 
 const Navigation: React.FC<IProps> = (props: IProps) => (
-  <nav className="navigation main-navigation">
+  <MenuList className="navigation main-navigation">
     {contentLinks.map(link => (
-      <li
+      <MenuItem
         key={link.key}
         className="content-link-item"
       >
@@ -20,17 +22,17 @@ const Navigation: React.FC<IProps> = (props: IProps) => (
         >
           {link.text}
         </RouteLink>
-      </li>
+      </MenuItem>
     ))}
-    <li className="link-item">
+    <MenuItem className="link-item">
       <RouteLink
         to={links.userGuide()}
         className="link user-guide"
       >
         ?
         </RouteLink>
-    </li>
-  </nav>
+    </MenuItem>
+  </MenuList>
 )
 
 export default Navigation

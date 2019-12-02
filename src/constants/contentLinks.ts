@@ -14,7 +14,7 @@ const fractal: IContentLink = {
 const colorScheme: IContentLink = {
   key: ContentLinkType.colorScheme,
   href: routeLinks.colorScheme(),
-  text: 'Color Scheme'
+  text: 'Color'
 }
 
 const hexagon: IContentLink = {

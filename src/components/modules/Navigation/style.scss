@@ -1,0 +1,17 @@
+.main-navigation {
+    display: flex;
+    align-items: center;
+    height: inherit;
+    width: 80%;
+
+    .content-link-item {
+        width: 150px;
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    .user-guide {
+        font-weight: bold;
+        font-size: 40px;
+    }
+}
