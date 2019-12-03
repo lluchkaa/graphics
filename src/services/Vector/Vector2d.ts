@@ -11,7 +11,7 @@ class Vector2d {
 
   public static fromAbsAng = (abs: number, ang: number) =>
     new Vector2d(abs * Math.cos(ang), abs * Math.sin(ang))
-    
+
   public static fromPoint = (p: IPoint2d) => new Vector2d(p.x, p.y)
 
   public get x(): number {
@@ -38,6 +38,11 @@ class Vector2d {
   ang = () => Math.atan(this._y / this._x)
 
   toPoint = (): IPoint2d => ({ x: this._x, y: this._y })
+
+  fromPoint = (p: IPoint2d): IPoint2d => ({
+    x: p.x + this._x,
+    y: p.y + this._y
+  })
 }
 
 export default Vector2d

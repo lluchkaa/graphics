@@ -3,6 +3,9 @@ import React from 'react'
 import Content from './content'
 import { IPoint2d } from '../../../interfaces/IPoint'
 import Vector2d from '../../../services/Vector'
+import { rotatePoint } from '../../../services/afin/rotate'
+import { movePoint, movePointV } from '../../../services/afin/move'
+import { scalePoint } from '../../../services/afin/scale'
 
 export enum Anchor {
   FirstPoint,
@@ -57,10 +60,11 @@ class Hexagon extends React.Component<IProps, IState> {
     this.updateByValue()
   }
 
-  getCenterOfFigure = (sideLen: number): IPoint2d => {
+  getCenterOfFigure = (): IPoint2d => {
+    const { startSideLen } = this.state
     const { sidesCount } = this
 
-    const abs = sideLen / 2 / (Math.PI / sidesCount)
+    const abs = startSideLen / 2 / (Math.PI / sidesCount)
     const ang = (Math.PI * (sidesCount - 2)) / sidesCount
     return Vector2d.fromAbsAng(abs, ang).toPoint()
   }
@@ -79,23 +83,57 @@ class Hexagon extends React.Component<IProps, IState> {
     if (!firstPoint) {
       return
     }
-    const points: IPoint2d[] = []
     switch (anchor) {
       case Anchor.Center:
         this.updatePointsByCenter(sideLen, ang)
         break
       case Anchor.FirstPoint:
-
+        this.updatePointsByFirst(sideLen, ang)
       default:
-        break
+        return
     }
   }
 
   updatePointsByCenter = (sideLen: number, ang: number) => {
-    const center = this.getCenterOfFigure(sideLen)
+    const { firstPoint, startSideLen } = this.state
+    if (!firstPoint) {
+      return
+    }
+    const center = this.getCenterOfFigure()
+    const base = Vector2d.fromPoint(center)
+    const negBase = Vector2d.fromPoint(scalePoint(base, -1, -1))
+
+    const points: IPoint2d[] = []
+    for (let i = 0; i < this.sidesCount; ++i) {
+      const p1 = movePointV(firstPoint, negBase)
+      const p2 = rotatePoint(p1, ang + ((Math.PI * 2) / this.sidesCount) * i)
+
+      const diff =
+        (sideLen - startSideLen) / 2 / Math.sin(Math.PI / this.sidesCount)
+      const diffVec = Vector2d.fromAbsAng(diff, base.ang())
+
+      const p3 = movePointV(p2, base.add(diffVec))
+      points.push(p3)
+    }
+    this.setState({ points })
   }
 
-  updatePointsByFirst = (sideLen: number, ang: number) => {}
+  updatePointsByFirst = (sideLen: number, ang: number) => {
+    const { firstPoint } = this.state
+    if (!firstPoint) {
+      return
+    }
+    const points: IPoint2d[] = [firstPoint]
+    const baseAng = (Math.PI * (this.sidesCount - 2)) / this.sidesCount
+    for (let i = 1; i < this.sidesCount; ++i) {
+      const point = Vector2d.fromAbsAng(sideLen, baseAng * i + ang).fromPoint(
+        points[i - 1]
+      )
+      points.push(point)
+    }
+
+    this.setState({ points })
+  }
 
   toggleIsPlaying = (isPlaying?: boolean) => {
     this.setState((prevState) => ({
@@ -103,8 +141,34 @@ class Hexagon extends React.Component<IProps, IState> {
     }))
   }
 
+  setCurrentValue = (currentValue: number) => {
+    this.setState({ currentValue, isPlaying: false })
+  }
+
   render() {
-    return <Content />
+    const {
+      points,
+      firstPoint,
+      startSideLen,
+      endSideLen,
+      anchor,
+      currentValue,
+      isPlaying
+    } = this.state
+    return (
+      <Content
+        points={points}
+        firstPoint={firstPoint}
+        startSideLen={startSideLen}
+        sidesCount={this.sidesCount}
+        endSideLen={endSideLen}
+        anchor={anchor}
+        currentValue={currentValue}
+        maxValue={this.maxValue}
+        isPlaying={isPlaying}
+        setCurrentValue={this.setCurrentValue}
+      />
+    )
   }
 }
 
