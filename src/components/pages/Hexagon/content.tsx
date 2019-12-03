@@ -43,6 +43,42 @@ class Content extends React.Component<IProps, IState> {
     }
   }
 
+  drawLines = () => {
+    if (!this.canvas.current) {
+      return
+    }
+    const { height, width } = this.canvas.current
+    const ctx = this.canvas.current.getContext('2d')
+    if (!ctx) {
+      return
+    }
+    const size = Math.max(width, height) / 2
+    const centerX = width / 2
+    const centerY = height / 2
+    ctx.beginPath()
+
+    ctx.moveTo(0, centerY)
+    ctx.lineTo(width, centerY)
+    ctx.moveTo(centerX, 0)
+    ctx.lineTo(centerX, height)
+    ctx.stroke()
+
+    ctx.setLineDash([2])
+    for (let i = 0; i < size; ++i) {
+      const offset = i * this.base
+      ctx.moveTo(0, centerY + offset)
+      ctx.lineTo(width, centerY + offset)
+      ctx.moveTo(centerX + offset, 0)
+      ctx.lineTo(centerX + offset, height)
+      ctx.moveTo(0, centerY - offset)
+      ctx.lineTo(width, centerY - offset)
+      ctx.moveTo(centerX - offset, 0)
+      ctx.lineTo(centerX - offset, height)
+    }
+    ctx.stroke()
+    ctx.setLineDash([])
+  }
+
   drawOnCanvas = () => {
     const { points } = this.props
     if (!this.canvas.current) {
@@ -53,8 +89,9 @@ class Content extends React.Component<IProps, IState> {
     if (!ctx) {
       return
     }
-    ctx.beginPath()
     ctx.clearRect(0, 0, width, height)
+    this.drawLines()
+    ctx.beginPath()
     ctx.lineWidth = 1
     ctx.fillStyle = '#000000'
     const start = this.pointToCanvas(points[0])
@@ -62,8 +99,6 @@ class Content extends React.Component<IProps, IState> {
     points.forEach((p) => {
       const point = this.pointToCanvas(p)
       ctx.lineTo(point.x, point.y)
-      ctx.stroke()
-      ctx.moveTo(point.x, point.y)
     })
     ctx.lineTo(start.x, start.y)
     ctx.stroke()
