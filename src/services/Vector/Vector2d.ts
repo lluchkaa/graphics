@@ -34,8 +34,17 @@ class Vector2d {
   add = (v: Vector2d) => new Vector2d(this._x + v._x, this._y + v._y)
   sub = (v: Vector2d) => this.add(v.neg())
   mul = (v: Vector2d) => this._x * v._x + this._y * v._y
-  abs = () => Math.sqrt(this._x * this._x + this._y * this._y)
   ang = () => Math.atan(this._y / this._x)
+
+  public get abs() {
+    return Math.sqrt(this._x * this._x + this._y * this._y)
+  }
+
+  public set abs(v: number) {
+    const a = this.ang()
+    this._x = v * Math.cos(a)
+    this._y = v * Math.sin(a)
+  }
 
   toPoint = (): IPoint2d => ({ x: this._x, y: this._y })
 

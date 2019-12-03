@@ -33,15 +33,19 @@ class Hexagon extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
     this.state = {
-      firstPoint: null,
-      startSideLen: 0,
-      endSideLen: 0,
+      firstPoint: { x: 1, y: 2 },
+      startSideLen: 1,
+      endSideLen: 5,
       anchor: Anchor.Center,
       points: [],
 
       currentValue: 0,
       isPlaying: false
     }
+  }
+
+  componentDidMount() {
+    this.updateByValue()
   }
 
   componentDidUpdate(prevProps: IProps, prevState: IState) {
@@ -104,15 +108,21 @@ class Hexagon extends React.Component<IProps, IState> {
     const negBase = Vector2d.fromPoint(scalePoint(base, -1, -1))
 
     const points: IPoint2d[] = []
+
+    const first = base.sub(Vector2d.fromPoint(firstPoint))
+
+    const diff =
+      (sideLen - startSideLen) / 2 / Math.sin(Math.PI / this.sidesCount)
+    console.log('diff', diff)
+
+    console.log('first', first)
+    first.abs += diff
+    console.log('first', first)
+    const p1 = movePointV(first.toPoint(), negBase)
+
     for (let i = 0; i < this.sidesCount; ++i) {
-      const p1 = movePointV(firstPoint, negBase)
       const p2 = rotatePoint(p1, ang + ((Math.PI * 2) / this.sidesCount) * i)
-
-      const diff =
-        (sideLen - startSideLen) / 2 / Math.sin(Math.PI / this.sidesCount)
-      const diffVec = Vector2d.fromAbsAng(diff, base.ang())
-
-      const p3 = movePointV(p2, base.add(diffVec))
+      const p3 = movePointV(p2, base)
       points.push(p3)
     }
     this.setState({ points })
@@ -124,14 +134,14 @@ class Hexagon extends React.Component<IProps, IState> {
       return
     }
     const points: IPoint2d[] = [firstPoint]
-    const baseAng = (Math.PI * (this.sidesCount - 2)) / this.sidesCount
+    const baseAng =
+      Math.PI - (Math.PI * (this.sidesCount - 2)) / this.sidesCount
     for (let i = 1; i < this.sidesCount; ++i) {
       const point = Vector2d.fromAbsAng(sideLen, baseAng * i + ang).fromPoint(
         points[i - 1]
       )
       points.push(point)
     }
-
     this.setState({ points })
   }
 
@@ -142,7 +152,7 @@ class Hexagon extends React.Component<IProps, IState> {
   }
 
   setCurrentValue = (currentValue: number) => {
-    this.setState({ currentValue, isPlaying: false })
+    this.setState({ currentValue })
   }
 
   render() {
@@ -167,6 +177,7 @@ class Hexagon extends React.Component<IProps, IState> {
         maxValue={this.maxValue}
         isPlaying={isPlaying}
         setCurrentValue={this.setCurrentValue}
+        toggleIsPlaying={this.toggleIsPlaying}
       />
     )
   }
