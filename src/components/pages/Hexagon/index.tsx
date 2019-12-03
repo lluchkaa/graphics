@@ -111,7 +111,7 @@ class Hexagon extends React.Component<IProps, IState> {
     const negBase = Vector2d.fromPoint(scalePoint(base, -1, -1))
 
     const points: IPoint2d[] = []
-
+    
     const first = base.sub(Vector2d.fromPoint(firstPoint))
 
     const diff = (sideLen - startSideLen) / 2 / Math.sin(Math.PI / sidesCount)
@@ -119,7 +119,8 @@ class Hexagon extends React.Component<IProps, IState> {
     const p1 = movePointV(first.toPoint(), negBase)
 
     for (let i = 0; i < sidesCount; ++i) {
-      const p2 = rotatePoint(p1, ang + ((Math.PI * 2) / sidesCount) * i)
+      const a = ang + ((Math.PI * 2) / sidesCount) * i
+      const p2 = rotatePoint(p1, a)
       const p3 = movePointV(p2, base)
       points.push(p3)
     }

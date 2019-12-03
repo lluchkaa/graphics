@@ -39,7 +39,7 @@ class Content extends React.Component<IProps, IState> {
     const { height, width } = this.canvas.current!
     return {
       x: width / 2 + p.x * this.base,
-      y: height / 2 + p.y * this.base
+      y: height / 2 - p.y * this.base
     }
   }
 
@@ -93,12 +93,12 @@ class Content extends React.Component<IProps, IState> {
     this.drawLines()
     ctx.beginPath()
     ctx.lineWidth = 1
-    ctx.fillStyle = '#000000'
     const start = this.pointToCanvas(points[0])
     ctx.moveTo(start.x, start.y)
-    points.forEach((p) => {
+    points.forEach((p, i) => {
       const point = this.pointToCanvas(p)
       ctx.lineTo(point.x, point.y)
+      ctx.stroke()
     })
     ctx.lineTo(start.x, start.y)
     ctx.stroke()
