@@ -30,7 +30,7 @@ const Content: React.FC<IProps> = (props: IProps) => {
         max={maxValue}
         step={1}
         onChange={async (e) =>
-          setCurrentValue(await Number(getValueFromInput(e)))
+          setCurrentValue(Number(await getValueFromInput(e)))
         }
       />
     </div>
