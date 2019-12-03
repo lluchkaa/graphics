@@ -16,6 +16,8 @@ export const getValueFromInput = async (
     case 'color':
     case 'textarea':
     case 'range':
+    case 'number':
+    case 'select-one':
       return e.target.value
     case 'file':
       if ('files' in e.target && e.target.files) {

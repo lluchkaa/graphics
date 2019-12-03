@@ -4,7 +4,7 @@ import { Anchor } from '.'
 import { getValueFromInput } from '../../../services/data'
 
 interface IProps {
-  firstPoint: IPoint2d | null
+  firstPoint: IPoint2d
   startSideLen: number
   endSideLen: number
   anchor: Anchor
@@ -18,6 +18,11 @@ interface IProps {
 
   setCurrentValue: (value: number) => void
   toggleIsPlaying: (isPlaying?: boolean) => void
+  setSidesCount: (sidesCount: number) => void
+  setFirstPoint: (firstPoint: IPoint2d) => void
+  setAnchor: (anchor: Anchor) => void
+  setStartSideLen: (startSideLen: number) => void
+  setEndSideLen: (endSideLen: number) => void
 }
 
 interface IState {}
@@ -69,7 +74,17 @@ class Content extends React.Component<IProps, IState> {
       currentValue,
       setCurrentValue,
       maxValue,
-      toggleIsPlaying
+      toggleIsPlaying,
+      firstPoint,
+      setFirstPoint,
+      startSideLen,
+      endSideLen,
+      setStartSideLen,
+      setEndSideLen,
+      anchor,
+      setAnchor,
+      sidesCount,
+      setSidesCount
     } = this.props
     return (
       <div className="page hexagon">
@@ -90,6 +105,54 @@ class Content extends React.Component<IProps, IState> {
           width={600}
           height={400}
         ></canvas>
+        <input
+          type="number"
+          value={firstPoint.x}
+          onChange={async (e) =>
+            setFirstPoint({
+              ...firstPoint,
+              x: Number(await getValueFromInput(e))
+            })
+          }
+        />
+        <input
+          type="number"
+          value={firstPoint.y}
+          onChange={async (e) =>
+            setFirstPoint({
+              ...firstPoint,
+              y: Number(await getValueFromInput(e))
+            })
+          }
+        />
+        <input
+          type="number"
+          value={startSideLen}
+          onChange={async (e) =>
+            setStartSideLen(Number(await getValueFromInput(e)))
+          }
+        />
+        <input
+          type="number"
+          value={endSideLen}
+          onChange={async (e) =>
+            setEndSideLen(Number(await getValueFromInput(e)))
+          }
+        />
+        <select
+          value={anchor}
+          onChange={async (e) => setAnchor(Number(await getValueFromInput(e)))}
+        >
+          <option value={Anchor.Center}>Центр</option>
+          <option value={Anchor.FirstPoint}>Перша Точка</option>
+        </select>
+        <input
+          type="number"
+          value={sidesCount}
+          onChange={async (e) =>
+            setSidesCount(Number(await getValueFromInput(e)))
+          }
+        />
       </div>
     )
   }

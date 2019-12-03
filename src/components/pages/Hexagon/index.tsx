@@ -14,11 +14,12 @@ export enum Anchor {
 
 interface IProps {}
 interface IState {
-  firstPoint: IPoint2d | null
+  firstPoint: IPoint2d
   startSideLen: number
   endSideLen: number
   anchor: Anchor
   points: IPoint2d[]
+  sidesCount: number
 
   currentValue: number
   isPlaying: boolean
@@ -26,18 +27,18 @@ interface IState {
 
 class Hexagon extends React.Component<IProps, IState> {
   private interval: number = 0
-  private sidesCount = 6
   private maxValue = 100
   private speed = 1
 
   constructor(props: IProps) {
     super(props)
     this.state = {
-      firstPoint: { x: 1, y: 2 },
+      firstPoint: { x: 0, y: 0 },
       startSideLen: 1,
       endSideLen: 5,
       anchor: Anchor.Center,
       points: [],
+      sidesCount: 6,
 
       currentValue: 0,
       isPlaying: false
@@ -55,6 +56,9 @@ class Hexagon extends React.Component<IProps, IState> {
     if (prevState.isPlaying && !this.state.isPlaying) {
       window.clearInterval(this.interval)
     }
+    if (prevState.currentValue !== this.state.currentValue) {
+      this.updateByValue()
+    }
   }
 
   buildNext = () => {
@@ -65,8 +69,7 @@ class Hexagon extends React.Component<IProps, IState> {
   }
 
   getCenterOfFigure = (): IPoint2d => {
-    const { startSideLen } = this.state
-    const { sidesCount } = this
+    const { startSideLen, sidesCount } = this.state
 
     const abs = startSideLen / 2 / (Math.PI / sidesCount)
     const ang = (Math.PI * (sidesCount - 2)) / sidesCount
@@ -99,7 +102,7 @@ class Hexagon extends React.Component<IProps, IState> {
   }
 
   updatePointsByCenter = (sideLen: number, ang: number) => {
-    const { firstPoint, startSideLen } = this.state
+    const { firstPoint, startSideLen, sidesCount } = this.state
     if (!firstPoint) {
       return
     }
@@ -111,17 +114,12 @@ class Hexagon extends React.Component<IProps, IState> {
 
     const first = base.sub(Vector2d.fromPoint(firstPoint))
 
-    const diff =
-      (sideLen - startSideLen) / 2 / Math.sin(Math.PI / this.sidesCount)
-    console.log('diff', diff)
-
-    console.log('first', first)
+    const diff = (sideLen - startSideLen) / 2 / Math.sin(Math.PI / sidesCount)
     first.abs += diff
-    console.log('first', first)
     const p1 = movePointV(first.toPoint(), negBase)
 
-    for (let i = 0; i < this.sidesCount; ++i) {
-      const p2 = rotatePoint(p1, ang + ((Math.PI * 2) / this.sidesCount) * i)
+    for (let i = 0; i < sidesCount; ++i) {
+      const p2 = rotatePoint(p1, ang + ((Math.PI * 2) / sidesCount) * i)
       const p3 = movePointV(p2, base)
       points.push(p3)
     }
@@ -129,14 +127,13 @@ class Hexagon extends React.Component<IProps, IState> {
   }
 
   updatePointsByFirst = (sideLen: number, ang: number) => {
-    const { firstPoint } = this.state
+    const { firstPoint, sidesCount } = this.state
     if (!firstPoint) {
       return
     }
     const points: IPoint2d[] = [firstPoint]
-    const baseAng =
-      Math.PI - (Math.PI * (this.sidesCount - 2)) / this.sidesCount
-    for (let i = 1; i < this.sidesCount; ++i) {
+    const baseAng = Math.PI - (Math.PI * (sidesCount - 2)) / sidesCount
+    for (let i = 1; i < sidesCount; ++i) {
       const point = Vector2d.fromAbsAng(sideLen, baseAng * i + ang).fromPoint(
         points[i - 1]
       )
@@ -151,9 +148,12 @@ class Hexagon extends React.Component<IProps, IState> {
     }))
   }
 
-  setCurrentValue = (currentValue: number) => {
-    this.setState({ currentValue })
-  }
+  setCurrentValue = (currentValue: number) => this.setState({ currentValue })
+  setSidesCount = (sidesCount: number) => this.setState({ sidesCount })
+  setFirstPoint = (firstPoint: IPoint2d) => this.setState({ firstPoint })
+  setAnchor = (anchor: Anchor) => this.setState({ anchor })
+  setStartSideLen = (startSideLen: number) => this.setState({ startSideLen })
+  setEndSideLen = (endSideLen: number) => this.setState({ endSideLen })
 
   render() {
     const {
@@ -163,14 +163,15 @@ class Hexagon extends React.Component<IProps, IState> {
       endSideLen,
       anchor,
       currentValue,
-      isPlaying
+      isPlaying,
+      sidesCount
     } = this.state
     return (
       <Content
         points={points}
         firstPoint={firstPoint}
         startSideLen={startSideLen}
-        sidesCount={this.sidesCount}
+        sidesCount={sidesCount}
         endSideLen={endSideLen}
         anchor={anchor}
         currentValue={currentValue}
@@ -178,6 +179,11 @@ class Hexagon extends React.Component<IProps, IState> {
         isPlaying={isPlaying}
         setCurrentValue={this.setCurrentValue}
         toggleIsPlaying={this.toggleIsPlaying}
+        setSidesCount={this.setSidesCount}
+        setFirstPoint={this.setFirstPoint}
+        setAnchor={this.setAnchor}
+        setStartSideLen={this.setStartSideLen}
+        setEndSideLen={this.setEndSideLen}
       />
     )
   }
