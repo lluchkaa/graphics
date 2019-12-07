@@ -59,15 +59,6 @@ class Content extends React.Component<IProps, IState> {
     }
   }
 
-  // static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
-  //   return {
-  //     k: nextProps.k,
-  //     c: nextProps.c,
-  //     zoom: nextProps.zoom,
-  //     center: nextProps.center
-  //   }
-  // }
-
   componentDidMount() {
     window.addEventListener('keypress', (e) => this.keyPressed(e.keyCode))
   }
@@ -144,40 +135,36 @@ class Content extends React.Component<IProps, IState> {
       k,
       setK,
       c,
-      setC,
-      center,
-      setCenter,
-      iterations,
-      setIterations
+      setC
     } = this.props
     const {
       k: curK,
       c: curC,
-      zoom: curZoom,
-      center: curCenter,
-      iterations: curIterations
+      zoom: curZoom
     } = this.state
     return (
       <div
-        className="page fractal"
+        className="page-fractal"
       >
         <Header />
         <div className="content">
           <div
             className="fractal-wrapper"
           >
-            <Image
-              className="fractal"
-              src={image}
-              onClick={this.onImageClick}
-            />
-            <input
-              className="zoom"
-              type="number"
-              value={Math.round(curZoom * this.scale)}
-              onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
-              onBlur={() => setZoom(this.state.zoom)}
-            />
+            <div className="box-fractal">
+              <Image
+                className="fractal-img"
+                src={image}
+                onClick={this.onImageClick}>
+              </Image>
+              <input
+                className="zoom"
+                type="number"
+                value={Math.round(curZoom * this.scale)}
+                onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
+                onBlur={() => setZoom(this.state.zoom)}
+              />
+            </div>
           </div>
           <div
             className="info"
@@ -208,57 +195,6 @@ class Content extends React.Component<IProps, IState> {
                   value={curC}
                   onChange={(e) => this.setState({ c: +e.target.value })}
                   onBlur={() => curC !== c && setC(curC)}
-                />
-              </div>
-              <div
-                className="input-group"
-              >
-                <label>iterations = </label>
-                <input
-                  type="number"
-                  value={curIterations}
-                  onChange={(e) => this.setState({ iterations: +e.target.value })}
-                  onBlur={() => curIterations !== iterations && setIterations(curIterations)}
-                />
-              </div>
-            </div>
-            <div className="inputs center">
-              <div
-                className="input-group"
-              >
-                <label>x = </label>
-                <input
-                  type="number"
-                  value={Math.round(curCenter.x * this.scale)}
-                  onChange={(e) => {
-                    const { value } = e.target
-                    this.setState(prev => ({
-                      center: {
-                        x: +value / this.scale,
-                        y: prev.center.y
-                      }
-                    }))
-                  }}
-                  onBlur={() => curCenter !== center && setCenter(curCenter)}
-                />
-              </div>
-              <div
-                className="input-group"
-              >
-                <label>y = </label>
-                <input
-                  type="number"
-                  value={Math.round(curCenter.y * this.scale)}
-                  onChange={(e) => {
-                    const { value } = e.target
-                    this.setState(prev => ({
-                      center: {
-                        x: prev.center.x,
-                        y: +value / this.scale
-                      }
-                    }))
-                  }}
-                  onBlur={() => curCenter !== center && setCenter(curCenter)}
                 />
               </div>
             </div>

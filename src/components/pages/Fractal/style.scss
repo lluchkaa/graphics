@@ -1,31 +1,43 @@
-.fractal {
-  display: flex;
-  flex-direction: column;
-
+.page-fractal {
   .content {
     display: flex;
-    flex-direction: row;
+    height: calc(100vh - 100px);
+    align-items: center;
 
     .fractal-wrapper {
-      $height: 30rem;
-      $width: 40rem;
-      
-      position: relative;
+      width: 60%;
 
-      height: $height;
-      width: $width;
+      .box-fractal {
+        display: relative;
+        width: 900px;
+        height: 600px;
 
-      .fractal {
-        width: 100%;
-        height: 100%;
+        .fractal-img {
+          width: 100%;
+          height: 100%;
+          
+          img {
+            border-radius: 15px;
+            border: 2px solid rgba(134, 33, 243, 0.7);
+          }
+        }
+
+        .zoom {
+          position: absolute;
+          top: 0;
+          left: 850px;
+          width: 148px;
+          height: 60px;
+          background: #FFFFFF;
+          border: 3px solid rgba(134, 33, 243, 0.7);
+          box-sizing: border-box;
+          border-radius: 30px;
+        }
       }
+    }
 
-      .zoom {
-        $marg: 2rem;
-        position: absolute;
-        top: $marg;
-        right: $marg;
-      }
+    .info {
+      width: 40%;
     }
   }
 }

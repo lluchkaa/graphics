@@ -122,6 +122,7 @@ class Content extends React.Component<IProps, IState> {
     } = this.props
     return (
       <div className="page hexagon">
+         <Header/>
         <input
           type="range"
           value={currentValue}
