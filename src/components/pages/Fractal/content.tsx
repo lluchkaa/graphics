@@ -5,6 +5,7 @@ import { IPoint2d } from '../../../interfaces/IPoint'
 import Header from '../../modules/Header'
 
 import './style.scss'
+import { FilledInput } from '@material-ui/core'
 
 interface IProps {
   image: string
@@ -144,26 +145,32 @@ class Content extends React.Component<IProps, IState> {
     } = this.state
     return (
       <div
-        className="page-fractal"
+        className="fractal"
       >
         <Header />
         <div className="content">
           <div
             className="fractal-wrapper"
           >
-            <div className="box-fractal">
-              <Image
-                className="fractal-img"
-                src={image}
-                onClick={this.onImageClick}>
-              </Image>
-              <input
-                className="zoom"
-                type="number"
-                value={Math.round(curZoom * this.scale)}
-                onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
-                onBlur={() => setZoom(this.state.zoom)}
-              />
+            <Image
+              className="fractal-img"
+              src={image}
+              onClick={this.onImageClick}>
+            </Image>
+            <input
+              className="zoom"
+              type="number"
+              value={Math.round(curZoom * this.scale)}
+              onChange={(e) => this.setState({ zoom: +e.target.value / this.scale })}
+              onBlur={() => setZoom(this.state.zoom)}>
+            </input>
+            <div className="btn-upload-download">
+              <button className="btn-hover btn-download" onClick={()=>{}}>
+                Download
+              </button>
+              <button className="btn-hover btn-upload">
+                Upload
+              </button>
             </div>
           </div>
           <div
@@ -184,6 +191,7 @@ class Content extends React.Component<IProps, IState> {
                   value={curK}
                   onChange={(e) => this.setState({ k: +e.target.value })}
                   onBlur={() => curK !== k && setK(curK)}
+                  className="coefs-input"
                 />
               </div>
               <div
@@ -195,6 +203,7 @@ class Content extends React.Component<IProps, IState> {
                   value={curC}
                   onChange={(e) => this.setState({ c: +e.target.value })}
                   onBlur={() => curC !== c && setC(curC)}
+                  className="coefs-input"
                 />
               </div>
             </div>

@@ -1,43 +1,171 @@
-.page-fractal {
+@import '../../../constants/variables.scss';
+
+.fractal {
+  display: flex;
+  flex-direction: column;
+
   .content {
     display: flex;
-    height: calc(100vh - 100px);
+    flex-direction: row;
     align-items: center;
+    height: calc(100vh - 100px);
 
     .fractal-wrapper {
-      width: 60%;
+      position: relative;
+      width: 1000px;
 
-      .box-fractal {
-        display: relative;
+      .fractal-img {
         width: 900px;
         height: 600px;
+        margin-left: 100px;
 
-        .fractal-img {
-          width: 100%;
-          height: 100%;
-          
-          img {
-            border-radius: 15px;
-            border: 2px solid rgba(134, 33, 243, 0.7);
-          }
+        img {
+          border-radius: 15px;
+        }
+      }
+
+      .zoom {
+        $marg: 2rem;
+        position: absolute;
+        top: $marg;
+        right: $marg;
+        background: #FFFFFF;
+        border: 3px solid rgba(134, 33, 243, 0.7);
+        box-sizing: border-box;
+        border-radius: 30px;
+        width: 148px;
+        height: 60px;
+        font-weight: 600;
+        font-size: 24px;
+        color: $electricViolet;
+        text-align: center;
+      }
+
+      .btn-upload-download {
+        position: absolute;
+        bottom: 0rem;
+        right: 0rem;
+
+        .btn-hover {
+          font-weight: 600;
+          font-size: 36px;
+          text-align: center;
+          color: $electricViolet;
+          width: 450px;
+          height: 104px;
+          background: #FFFFFF;
+          box-sizing: border-box;
         }
 
-        .zoom {
-          position: absolute;
-          top: 0;
-          left: 850px;
-          width: 148px;
-          height: 60px;
-          background: #FFFFFF;
-          border: 3px solid rgba(134, 33, 243, 0.7);
-          box-sizing: border-box;
-          border-radius: 30px;
+        .btn-hover:hover {
+          cursor: pointer;
+        }
+
+        .btn-download {
+          border-radius: 0px 0px 0px 15px;
+          border: 2px solid rgba(134, 33, 243, 0.7);
+        }
+
+        .btn-upload {
+          border-radius: 0px 0px 15px 0px;
+          border: 2px solid rgba(134, 33, 243, 0.7);
         }
       }
     }
 
     .info {
-      width: 40%;
+      width: 100%;
+
+      .function {
+        font-weight: bold;
+        font-size: 48px;
+        color: $electricViolet
+      }
+
+      .coefs {
+        .input-group {
+          margin-top: 47px;
+
+          label {
+            font-weight: 500;
+            font-size: 36px;
+            color: $electricViolet;
+          }
+
+          .coefs-input {
+            background: #FFFFFF;
+            border: 2px solid rgba(134, 33, 243, 0.7);
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 36px;
+            width: 185px;
+            height: 71px;
+            color: $electricViolet;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 900px) and (min-width: 1024px) {
+  .fractal {
+    .content {
+      .fractal-wrapper {
+        width: 800px;
+
+        .fractal-img {
+          width: 700px;
+          height: 500px;
+          margin-left: 100px;
+        }
+
+        .zoom {
+          width: 120px;
+          height: 50px;
+          font-size: 20px;
+        }
+
+        .btn-upload-download {
+  
+          .btn-hover {
+            font-size: 22px;
+            width: 350px;
+            height: 74px;
+          }
+          
+          .btn-download {
+            border: 1px solid rgba(134, 33, 243, 0.7);
+          }
+  
+          .btn-upload {
+            border: 1px solid rgba(134, 33, 243, 0.7);
+          }
+        }
+      }
+
+      .info {
+        .function {
+          font-size: 38px;
+        }
+
+        .coefs {
+          .input-group {
+            margin-top: 37px;
+
+            label {
+              font-size: 26px;
+            }
+
+            .coefs-input {
+              font-size: 26px;
+              width: 145px;
+              height: 51px;
+            }
+          }
+        }
+      }
     }
   }
 }
