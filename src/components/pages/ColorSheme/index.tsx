@@ -105,9 +105,9 @@ class ColorScheme extends React.Component<IProps, IState> {
       row.forEach((color, x) => {
         const newColor = color.copy()
         if (
-          this.inRange(newColor.hue, selectedColor.hue, 40, 360) &&
-          this.inRange(newColor.saturation, selectedColor.saturation, 0.2) &&
-          this.inRange(newColor.light, selectedColor.light, 0.2)
+          this.inRange(newColor.hue, selectedColor.hue, 50, 360) &&
+          this.inRange(newColor.saturation, selectedColor.saturation, 0.3) &&
+          this.inRange(newColor.light, selectedColor.light, 0.3)
         ) {
           newColor.light += lightDiff
         }

@@ -110,7 +110,7 @@ class ColorRGB implements Color {
         : delta / (2 * (light > 0.5 ? 1 - light : light))
       : 0
 
-    return new ColorHSL(hue, saturation, light)
+    return new ColorHSL(Math.round(hue * 100) / 100, Math.round(saturation * 100) / 100, Math.round(light * 100) / 100)
   }
   public copy = () => new ColorRGB(this.red, this.green, this.blue)
 }
