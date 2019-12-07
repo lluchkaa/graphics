@@ -5,7 +5,6 @@ import { IPoint2d } from '../../../interfaces/IPoint'
 import Header from '../../modules/Header'
 
 import './style.scss'
-import { FilledInput } from '@material-ui/core'
 
 interface IProps {
   image: string
@@ -176,6 +175,7 @@ class Content extends React.Component<IProps, IState> {
           <div
             className="info"
           >
+            <div className="in-info">
             <div
               className="function"
             >
@@ -205,6 +205,7 @@ class Content extends React.Component<IProps, IState> {
                   onBlur={() => curC !== c && setC(curC)}
                   className="coefs-input"
                 />
+              </div>
               </div>
             </div>
           </div>

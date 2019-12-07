@@ -76,6 +76,11 @@
     .info {
       width: 100%;
 
+      .in-info {
+        width: 300px;
+        text-align: start;
+        margin: auto;
+
       .function {
         font-weight: bold;
         font-size: 48px;
@@ -107,6 +112,7 @@
       }
     }
   }
+  }
 }
 
 @media screen and (max-height: 900px) and (min-width: 1024px) {
@@ -128,17 +134,17 @@
         }
 
         .btn-upload-download {
-  
+
           .btn-hover {
             font-size: 22px;
             width: 350px;
             height: 74px;
           }
-          
+
           .btn-download {
             border: 1px solid rgba(134, 33, 243, 0.7);
           }
-  
+
           .btn-upload {
             border: 1px solid rgba(134, 33, 243, 0.7);
           }
@@ -146,22 +152,24 @@
       }
 
       .info {
-        .function {
-          font-size: 38px;
-        }
+        .in-info {
+          .function {
+            font-size: 38px;
+          }
 
-        .coefs {
-          .input-group {
-            margin-top: 37px;
+          .coefs {
+            .input-group {
+              margin-top: 37px;
 
-            label {
-              font-size: 26px;
-            }
+              label {
+                font-size: 26px;
+              }
 
-            .coefs-input {
-              font-size: 26px;
-              width: 145px;
-              height: 51px;
+              .coefs-input {
+                font-size: 26px;
+                width: 145px;
+                height: 51px;
+              }
             }
           }
         }
