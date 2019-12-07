@@ -1,0 +1,11 @@
+.color-input {
+  .hidden {
+    display: none;
+  }
+  min-width: 4rem;
+  min-height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

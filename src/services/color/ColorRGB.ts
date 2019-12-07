@@ -113,18 +113,6 @@ class ColorRGB implements Color {
     return new ColorHSL(Math.round(hue * 100) / 100, Math.round(saturation * 100) / 100, Math.round(light * 100) / 100)
   }
   public copy = () => new ColorRGB(this.red, this.green, this.blue)
-  public isRed = () => {
-    const {red, green, blue} = this
-    return red > 200 && green < 30 && blue < 30
-  }
-  public isGreen = () => {
-    const {red, green, blue} = this
-    return blue > 200 && green < 30 && red < 30
-  }
-  public isBlue = () => {
-    const {red, green, blue} = this
-    return blue > 200 && red < 30 && green < 30
-  }
 }
 
 export default ColorRGB
