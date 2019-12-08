@@ -3,6 +3,10 @@ import { IPoint2d } from '../../../interfaces/IPoint'
 import { Anchor } from '.'
 import { getValueFromInput } from '../../../services/data'
 import Header from '../../modules/Header'
+
+import './style.scss';
+import { Slider, IconButton, FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+
 interface IProps {
   firstPoint: IPoint2d
   startSideLen: number
@@ -24,7 +28,7 @@ interface IProps {
   setEndSideLen: (endSideLen: number) => void
 }
 
-interface IState {}
+interface IState { }
 
 class Content extends React.Component<IProps, IState> {
   private canvas = React.createRef<HTMLCanvasElement>()
@@ -118,76 +122,129 @@ class Content extends React.Component<IProps, IState> {
       anchor,
       setAnchor,
       sidesCount,
-      setSidesCount
+      setSidesCount,
+      isPlaying
     } = this.props
     return (
-      <div className="page hexagon">
-         <Header/>
-        <input
-          type="range"
-          value={currentValue}
-          min={0}
-          max={maxValue}
-          step={1}
-          onChange={async (e) =>
-            setCurrentValue(Number(await getValueFromInput(e)))
-          }
-        />
-        <button onClick={() => toggleIsPlaying()}>Play/Pause</button>
-        <canvas
-          ref={this.canvas}
-          className="canvas"
-          width={600}
-          height={400}
-        ></canvas>
-        <input
-          type="number"
-          value={firstPoint.x}
-          onChange={async (e) =>
-            setFirstPoint({
-              ...firstPoint,
-              x: Number(await getValueFromInput(e))
-            })
-          }
-        />
-        <input
-          type="number"
-          value={firstPoint.y}
-          onChange={async (e) =>
-            setFirstPoint({
-              ...firstPoint,
-              y: Number(await getValueFromInput(e))
-            })
-          }
-        />
-        <input
-          type="number"
-          value={startSideLen}
-          onChange={async (e) =>
-            setStartSideLen(Number(await getValueFromInput(e)))
-          }
-        />
-        <input
-          type="number"
-          value={endSideLen}
-          onChange={async (e) =>
-            setEndSideLen(Number(await getValueFromInput(e)))
-          }
-        />
-        <select
-          value={anchor}
-          onChange={async (e) => setAnchor(Number(await getValueFromInput(e)))}
-        >
-          <option value={Anchor.Center}>Центр</option>
-          <option value={Anchor.FirstPoint}>Перша Точка</option>
-        </select>
-        <input
-          type="number"
-          value={sidesCount}
-          onChange={async (e) =>
-            setSidesCount(Number(await getValueFromInput(e)))
-          }
-        />
+      <div className="page-hexagon">
+        <Header />
+        <div className="content">
+          <div className="hexagon-block">
+            <canvas
+              ref={this.canvas}
+              className="canvas"
+              width={600}
+              height={400}
+            ></canvas>
+            <IconButton onClick={() => toggleIsPlaying()} className="play">
+              <img src={isPlaying !== true ? require('../../../assets/images/play.png') : require('../../../assets/images/stop.png')} alt="play" />
+            </IconButton>
+            <Slider
+              value={currentValue}
+              min={0}
+              max={maxValue}
+              step={1}
+              className="slider-play"
+              onChange={async (e, value) =>
+                setCurrentValue(Number(value))}
+            />
+            <input
+              className="zoom"
+              type="number"
+              value={0}
+              onChange={() => { }}>
+            </input>
+            <button className="btn-hover btn-download" onClick={() => { }}>
+              Download
+              </button>
+          </div>
+          <div className="info">
+            <div className="in-info">
+              <div className="group-coef">
+                <div
+                  className="input-group"
+                >
+                  <label>x = </label>
+                  <input
+                    type="number"
+                    className="input-coef"
+                    value={firstPoint.x}
+                    onChange={async (e) =>
+                      setFirstPoint({
+                        ...firstPoint,
+                        x: Number(await getValueFromInput(e))
+                      })
+                    }
+                  />
+                </div>
+                <div
+                  className="input-group"
+                >
+                  <label>y = </label>
+                  <input
+                    type="number"
+                    className="input-coef"
+                    value={firstPoint.y}
+                    onChange={async (e) =>
+                      setFirstPoint({
+                        ...firstPoint,
+                        y: Number(await getValueFromInput(e))
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="group-coef">
+                <div
+                  className="input-group"
+                >
+                  <label>s = </label>
+                  <input
+                    type="number"
+                    className="input-coef"
+                    value={startSideLen}
+                    onChange={async (e) =>
+                      setStartSideLen(Number(await getValueFromInput(e)))
+                    }
+                  />
+                </div>
+                <div
+                  className="input-group"
+                >
+                  <label>e = </label>
+                  <input
+                    type="number"
+                    className="input-coef"
+                    value={endSideLen}
+                    onChange={async (e) =>
+                      setEndSideLen(Number(await getValueFromInput(e)))
+                    }
+                  />
+                </div>
+              </div>
+              <div
+                className="input-group-single"
+              >
+                <label>Parties number = </label>
+                <input
+                  type="number"
+                  className="input-coef-single"
+                  value={sidesCount}
+                  onChange={async (e) =>
+                    setSidesCount(Number(await getValueFromInput(e)))
+                  }
+                />
+              </div>
+              <FormControl component="fieldset" className="form-control">
+                <RadioGroup aria-label="anchor" name="anchor" className="radio-group"
+                  onChange={async (e, value) => setAnchor(Number(value))}>
+                  <FormControlLabel className="form-control-label" value={Anchor.Center} control={<Radio />} label="Around the center" checked={anchor === Anchor.Center ? true : false} />
+                  <FormControlLabel className="form-control-label" value={Anchor.FirstPoint} control={<Radio />} label="Around the vertex" checked={anchor === Anchor.FirstPoint ? true : false} />
+                </RadioGroup>
+              </FormControl>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

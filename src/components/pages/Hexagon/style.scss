@@ -1,0 +1,303 @@
+@import '../../../constants/variables.scss';
+
+.page-hexagon {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: calc(100vh - 100px);
+    text-align: start;
+
+    .hexagon-block {
+      position: relative;
+      width: 1000px;
+
+      .canvas {
+        width: 900px;
+        height: 600px;
+        margin-left: 100px;
+        border-radius: 15px;
+      }
+
+      .play {
+        margin-left: 100px;
+        margin-right: 50px;
+        margin-top: -20px;
+        padding: 0;
+      }
+
+      .zoom {
+        $marg: 2rem;
+        position: absolute;
+        top: $marg;
+        right: $marg;
+        background: #FFFFFF;
+        border: 3px solid rgba(134, 33, 243, 0.7);
+        box-sizing: border-box;
+        border-radius: 30px;
+        width: 148px;
+        height: 60px;
+        font-weight: 600;
+        font-size: 24px;
+        color: $electricViolet;
+        text-align: center;
+      }
+
+      .btn-hover {
+        position: absolute;
+        bottom: 10rem;
+        right: 1rem;
+        color: $electricViolet;
+        width: 244px;
+        height: 58px;
+        box-sizing: border-box;
+        background: #FFFFFF;
+        border: 2px solid rgba(134, 33, 243, 0.7);
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 30px;
+
+      }
+
+      .btn-hover:hover {
+        cursor: pointer;
+      }
+
+      .slider-play {
+        width: 790px;
+        margin-top: 70px;
+
+        .MuiSlider-rail {
+          background: rgba(134, 33, 243, 0.9);
+          height: 20px;
+          border-radius: 0px 12px 12px 0px;
+        }
+
+        .MuiSlider-track {
+          background: rgba(134, 33, 243, 0.9);
+          height: 20px;
+          border-radius: 12px 0px 0px 12px;
+
+        }
+
+        .MuiSlider-thumbColorPrimary {
+          background: $electricViolet;
+          border-radius: 6px;
+          height: 40px;
+          margin: -10px -5px;
+        }
+      }
+    }
+
+    .info {
+      width: 100%;
+
+      .in-info {
+        width: 427px;
+        margin: 0 auto;
+        text-align: start;
+
+        .group-coef {
+          display: flex;
+          direction: row;
+          justify-content: space-between;
+
+          .input-group {
+            margin-top: 28px;
+
+            .input-coef {
+              background: #FFFFFF;
+              border: 2px solid rgba(134, 33, 243, 0.7);
+              box-sizing: border-box;
+              border-radius: 15px;
+              font-weight: bold;
+              font-size: 28px;
+              text-align: center;
+              color: $electricViolet;
+              width: 139px;
+              height: 54px;
+            }
+
+            label {
+              font-weight: bold;
+              font-size: 36px;
+              color: $electricViolet;
+            }
+          }
+        }
+
+        .input-group-single {
+          margin-top: 28px;
+
+          .input-coef-single {
+            background: #FFFFFF;
+            border: 2px solid rgba(134, 33, 243, 0.7);
+            box-sizing: border-box;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 28px;
+            text-align: center;
+            color: $electricViolet;
+            width: 139px;
+            height: 54px;
+          }
+
+          label {
+            font-weight: bold;
+            font-size: 36px;
+            color: $electricViolet;
+          }
+        }
+
+        .form-control {
+          width: 387px;
+          margin-top: 28px;
+
+          .radio-group {
+            .form-control-label {
+              height: 71px;
+              background: #FFFFFF;
+              border: 2px solid rgba(134, 33, 243, 0.7);
+              border-radius: 35.5px;
+              margin: 14px 0;
+
+              .MuiButtonBase-root {
+                padding-left: 19px;
+
+                .MuiIconButton-label {
+                  .PrivateRadioButtonIcon-root-78 {
+                    .MuiSvgIcon-root {
+                      width: 35px;
+                      height: 35px;
+                      color: $electricViolet;
+                    }
+                  }
+                }
+              }
+
+              .MuiTypography-root {
+                font-weight: bold;
+                font-size: 36px;
+                color: $electricViolet;
+                padding: 0px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 900px) and (min-width: 1024px) {
+
+  .page-hexagon {
+    .content {
+      .hexagon-block {
+        width: 800px;
+
+        .canvas {
+          width: 700px;
+          height: 500px;
+          margin-left: 100px;
+        }
+
+        .play {
+          margin-left: 100px;
+          margin-right: 50px;
+          margin-top: -10px;
+          padding: 0;
+        }
+
+        .zoom {
+          width: 120px;
+          height: 50px;
+          font-size: 20px;
+        }
+
+        .btn-hover {
+          bottom: 7rem;
+          width: 204px;
+          height: 48px;
+          font-size: 22px;
+        }
+
+        .slider-play {
+          width: 590px;
+          margin-top: 40px;
+        }
+      }
+
+      .info {
+        width: 100%;
+
+        .in-info {
+          width: 317px;
+
+          .group-coef {
+
+            .input-group {
+              margin-top: 22px;
+
+              .input-coef {
+                font-size: 22px;
+                width: 109px;
+                height: 44px;
+              }
+
+              label {
+                font-size: 26px;
+              }
+            }
+          }
+
+          .input-group-single {
+            margin-top: 22px;
+
+            .input-coef-single {
+              font-size: 22px;
+              width: 109px;
+              height: 44px;
+            }
+
+            label {
+              font-size: 26px;
+            }
+          }
+
+          .form-control {
+            width: 287px;
+            margin-top: 22px;
+
+            .radio-group {
+              .form-control-label {
+                height: 51px;
+                margin: 10px 0;
+
+                .MuiButtonBase-root {
+                  padding-left: 15px;
+
+                  .MuiIconButton-label {
+                    .PrivateRadioButtonIcon-root-78 {
+                      .MuiSvgIcon-root {
+                        width: 30px;
+                        height: 30px;
+                      }
+                    }
+                  }
+                }
+
+                .MuiTypography-root {
+                  font-size: 22px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
