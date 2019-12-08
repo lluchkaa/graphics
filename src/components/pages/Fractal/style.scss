@@ -77,7 +77,7 @@
       width: 100%;
 
       .in-info {
-        width: 300px;
+        width: 318px;
         text-align: start;
         margin: auto;
 
@@ -107,7 +107,16 @@
             height: 71px;
             color: $electricViolet;
             text-align: center;
+          
           }
+
+          .MuiFormControl-root {
+            width: 100%;
+          .coefs-input-color {
+            width: 300px;
+            font-size: 28px;
+          }
+        }
         }
       }
     }
@@ -169,6 +178,11 @@
                 font-size: 26px;
                 width: 145px;
                 height: 51px;
+              }
+
+              .coefs-input-color {
+                width: 80%;
+                font-size: 22px;
               }
             }
           }

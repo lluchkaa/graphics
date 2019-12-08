@@ -5,6 +5,7 @@ import { IPoint2d } from '../../../interfaces/IPoint'
 import Header from '../../modules/Header'
 
 import './style.scss'
+import { FormControl, MenuItem, Select } from '@material-ui/core'
 
 interface IProps {
   image: string
@@ -128,6 +129,8 @@ class Content extends React.Component<IProps, IState> {
     this.setState({ zoom: newZoom, center: newCenter })
   }
 
+  tempInput = "color scheme";
+
   render() {
     const {
       image,
@@ -164,7 +167,7 @@ class Content extends React.Component<IProps, IState> {
               onBlur={() => setZoom(this.state.zoom)}>
             </input>
             <div className="btn-upload-download">
-              <button className="btn-hover btn-download" onClick={()=>{}}>
+              <button className="btn-hover btn-download" onClick={() => { }}>
                 Download
               </button>
               <button className="btn-hover btn-upload">
@@ -176,36 +179,49 @@ class Content extends React.Component<IProps, IState> {
             className="info"
           >
             <div className="in-info">
-            <div
-              className="function"
-            >
-              f(z) = z ^ k + c
+              <div
+                className="function"
+              >
+                f(z) = z ^ k + c
           </div>
-            <div className="inputs coefs">
-              <div
-                className="input-group"
-              >
-                <label>k = </label>
-                <input
-                  type="number"
-                  value={curK}
-                  onChange={(e) => this.setState({ k: +e.target.value })}
-                  onBlur={() => curK !== k && setK(curK)}
-                  className="coefs-input"
-                />
-              </div>
-              <div
-                className="input-group"
-              >
-                <label>c = </label>
-                <input
-                  type="number"
-                  value={curC}
-                  onChange={(e) => this.setState({ c: +e.target.value })}
-                  onBlur={() => curC !== c && setC(curC)}
-                  className="coefs-input"
-                />
-              </div>
+              <div className="inputs coefs">
+                <div
+                  className="input-group"
+                >
+                  <label>k = </label>
+                  <input
+                    type="number"
+                    value={curK}
+                    onChange={(e) => this.setState({ k: +e.target.value })}
+                    onBlur={() => curK !== k && setK(curK)}
+                    className="coefs-input"
+                  />
+                </div>
+                <div
+                  className="input-group"
+                >
+                  <label>c = </label>
+                  <input
+                    type="number"
+                    value={curC}
+                    onChange={(e) => this.setState({ c: +e.target.value })}
+                    onBlur={() => curC !== c && setC(curC)}
+                    className="coefs-input"
+                  />
+                </div>
+                <div
+                  className="input-group"
+                >
+                  <FormControl>
+                    <Select
+                      value={0}
+                      onChange={() => { }}
+                      className="coefs-input coefs-input-color"
+                    >
+                      <MenuItem value={0}>color scheme</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
             </div>
           </div>

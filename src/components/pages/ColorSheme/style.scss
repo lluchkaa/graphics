@@ -1,0 +1,269 @@
+@import '../../../constants/variables.scss';
+
+.page-color-scheme {
+  display: flex;
+  flex-direction: column;
+
+  .input-file {
+    display: none;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: calc(100vh - 100px);
+
+    .color-scheme-block {
+      position: relative;
+      width: 1000px;
+
+      .color-scheme-img {
+        width: 900px;
+        height: 600px;
+        margin-left: 100px;
+
+        img {
+          border-radius: 15px;
+        }
+      }
+
+      .zoom {
+        $marg: 2rem;
+        position: absolute;
+        top: $marg;
+        right: $marg;
+        background: #FFFFFF;
+        border: 3px solid rgba(134, 33, 243, 0.7);
+        box-sizing: border-box;
+        border-radius: 30px;
+        width: 148px;
+        height: 60px;
+        font-weight: 600;
+        font-size: 24px;
+        color: $electricViolet;
+        text-align: center;
+      }
+
+      .btn-upload-download {
+        position: absolute;
+        bottom: 0rem;
+        right: 0rem;
+
+        .btn-hover {
+          font-weight: 600;
+          font-size: 36px;
+          text-align: center;
+          color: $electricViolet;
+          width: 450px;
+          height: 104px;
+          background: #FFFFFF;
+          box-sizing: border-box;
+        }
+
+        .btn-hover:hover {
+          cursor: pointer;
+        }
+
+        .btn-download {
+          border-radius: 0px 0px 0px 15px;
+          border: 2px solid rgba(134, 33, 243, 0.7);
+        }
+
+        .btn-upload {
+          border-radius: 0px 0px 15px 0px;
+          border: 2px solid rgba(134, 33, 243, 0.7);
+        }
+      }
+    }
+
+    .info {
+      width: 100%;
+
+      .in-info {
+        width: 318px;
+        margin: 0 auto;
+        text-align: start;
+
+        .form-control {
+          width: 100%;
+
+          .radio-group {
+            .form-control-label {
+              height: 71px;
+              background: #FFFFFF;
+              border: 2px solid rgba(134, 33, 243, 0.7);
+              border-radius: 35.5px;
+              margin: 15px 0;
+
+              .MuiButtonBase-root {
+                padding: 19px;
+
+                .MuiIconButton-label {
+                  .PrivateRadioButtonIcon-root-53 {
+                    .MuiSvgIcon-root {
+                      width: 35px;
+                      height: 35px;
+                      color: $electricViolet;
+                    }
+                  }
+                }
+              }
+
+              .MuiTypography-root {
+                font-weight: bold;
+                font-size: 36px;
+                color: $electricViolet;
+                padding: 0 60px;
+              }
+            }
+          }
+        }
+
+        .color-input {
+          width: 100%;
+          height: 71px;
+          background: #FFFFFF;
+          border: 2px solid rgba(134, 33, 243, 0.7);
+          border-radius: 15px;
+          margin: 35px auto;
+        }
+
+        .light {
+          font-weight: bold;
+          font-size: 36px;
+          color: $electricViolet;
+          margin-top: 65px;
+        }
+
+        .slider-light {
+          width: 440px;
+          margin-top: 10px;
+
+          .MuiSlider-rail {
+            background: rgba(134, 33, 243, 0.9);
+            height: 20px;
+            border-radius: 0px 12px 12px 0px;
+
+          }
+
+          .MuiSlider-track {
+            background: rgba(134, 33, 243, 0.9);
+            height: 20px;
+            border-radius: 12px 0px 0px 12px;
+
+          }
+
+          .MuiSlider-thumbColorPrimary {
+            background: $electricViolet;
+            border-radius: 6px;
+            height: 40px;
+            margin: -10px -5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 900px) and (min-width: 1024px) {
+  .page-color-scheme {
+    .content {
+
+      .color-scheme-block {
+        width: 800px;
+
+        .color-scheme-img {
+          width: 700px;
+          height: 500px;
+          margin-left: 100px;
+        }
+
+        .zoom {
+          width: 120px;
+          height: 50px;
+          font-size: 20px;
+        }
+
+        .btn-upload-download {
+
+          .btn-hover {
+            font-size: 22px;
+            width: 350px;
+            height: 74px;
+          }
+
+          .btn-download {
+            border: 1px solid rgba(134, 33, 243, 0.7);
+          }
+
+          .btn-upload {
+            border: 1px solid rgba(134, 33, 243, 0.7);
+          }
+        }
+      }
+
+      .info {
+
+        .in-info {
+          width: 250px;
+
+          .form-control {
+            width: 100%;
+
+            .radio-group {
+              .form-control-label {
+                height: 61px;
+                margin: 10px 0;
+
+                .MuiButtonBase-root {
+
+                  .MuiIconButton-label {
+                    .PrivateRadioButtonIcon-root-53 {
+                      .MuiSvgIcon-root {
+                        width: 30px;
+                        height: 30px;
+                      }
+                    }
+                  }
+                }
+
+                .MuiTypography-root {
+                  font-size: 26px;
+                  padding: 0 35px;
+                }
+              }
+            }
+          }
+
+          .color-input {
+            height: 61px;
+            margin: 25px auto;
+          }
+
+          .light {
+            font-size: 26px;
+            margin-top: 50px;
+          }
+
+          .slider-light {
+            width: 380px;
+            margin-top: 10px;
+
+            .MuiSlider-rail {
+              height: 15px;
+            }
+
+            .MuiSlider-track {
+              height: 15px;
+            }
+
+            .MuiSlider-thumbColorPrimary {
+              height: 35px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
